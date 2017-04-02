@@ -21,56 +21,22 @@ export default class ShuttleBusInfo extends Component {
     restoring: false,
   };
 
-  constructor(props) {
-        super(props);
-        //bus = this.props.listNameFromParent;
-//         this.state = {
-            
-//             isLoading: true, 
-//             //dataSource is the interface
-//             dataSource: new ListView.DataSource({
-//             rowHasChanged: (row1, row2)=> row1 !== row2
-//             })
-//         };
-    }
-
-//     componentDidMount() {
-//         this.fetchData();
-//     }
-
-//     // --- calls Google API ---
-//     fetchData() {
-//         fetch(REQUEST_URL)
-//         .then((response) => response.json())
-//         .then((responseData) => {
-//             responseData = this.removeDuplicates(responseData);
-//             this.setState({
-//                 dataSource: this.state.dataSource.cloneWithRows(responseData),
-//                 //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
-//                 isLoading: false
-//             });
-//         })
-//         .done();
+//   constructor(props) {
+//         super(props);
+//            bus = this.props.bus;
+       
 //     }
 
     render() {
+     
         var bus = this.props.bus;
-        // var bus = this.props.bus;
         console.log("Shuttle bus info page");
         console.log(bus);
         //var features = (typeof buses.features !== 'undefined') ? buses.features : 'no features';
         return (
-            //fetch json data and display
             
             <View style={styles.container}>
                 <ScrollView>
-                {/*<View style={styles.navBar} >
-                    <TouchableHighlight onPress={this.goBack.bind(this)} >
-                        <Text style={styles.iconStyle}><Icon name="keyboard-backspace" size={25}/></Text>
-                    </TouchableHighlight>
-                    <Text style={styles.navText}> Bus Detail </Text>
-                </View>*/}
-
                 <View style={styles.contentContainer}>
                     <Text style = {styles.bigRect}>Map View here</Text>
                   

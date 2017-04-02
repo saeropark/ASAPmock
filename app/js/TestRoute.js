@@ -8,15 +8,18 @@ import {
   TouchableHighlight,
   ActivityIndicator, Platform
 } from 'react-native';
-import ShuttleBusInfo from './ShuttleBusInfo';
-
 
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 
-import AMRoute from './BusRoute/AMRoute';
-import PMRoute from './BusRoute/PMRoute';
-import LunchRoute from './BusRoute/LunchRoute';
+//import ShuttleBusInfo from './ShuttleBusInfo';
+import AMRouteNav from '../components/Navigation/AMRouteNav';
+import PMRouteNav from '../components/Navigation/PMRouteNav';
+import LunchRouteNav from '../components/Navigation/LunchRouteNav';
+
+// import AMRoute from './BusRoute/AMRoute';
+// import PMRoute from './BusRoute/PMRoute';
+// import LunchRoute from './BusRoute/LunchRoute';
 // var FAKE_BOOK_DATA = [
 //     {
 //         volumeInfo: {
@@ -33,11 +36,11 @@ var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&ar
 var styles = StyleSheet.create ({
     container: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#Ffcc00',
-        padding: 10
+        // flexDirection: 'row',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // backgroundColor: '#Ffcc00',
+        // padding: 10
     },
     thumbnail: {
         width: 53,
@@ -89,11 +92,11 @@ var styles = StyleSheet.create ({
   }
 });
 
-var bus;
+//var bus;
 export default class TestRoute extends Component {
      constructor(props){
         super(props);
-        bus = this.props.bus;
+        //bus = this.props.bus;
     }
         
  state = {
@@ -116,7 +119,6 @@ static title = 'List of Bus';
       { key: '1', title: 'AM' },
       { key: '2', title: 'PM' },
       { key: '3', title: 'Lunch' },
-     //{ key: 'ShuttleBusInfo'}
     ],
   };
 
@@ -141,11 +143,11 @@ static title = 'List of Bus';
   _renderScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <AMRoute />; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
+      return <AMRouteNav />; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
     case '2':
-      return <PMRoute />;
+      return <PMRouteNav />;
     case '3':
-      return <LunchRoute />;
+      return <LunchRouteNav />;
     //case "ShuttleBusInfo":
       //  return <ShuttleBusInfo listNameFromParent={bus} />
     default:

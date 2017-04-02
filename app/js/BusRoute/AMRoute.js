@@ -64,8 +64,8 @@ export default class AMroute extends Component {
   };
     constructor(props) {
         super(props);
+        
         this.state = {
-            
             isLoading: true, 
             //dataSource is the interface
             dataSource: new ListView.DataSource({

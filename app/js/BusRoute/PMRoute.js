@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   ActivityIndicator, Platform, Navigator
 } from 'react-native';
-import ShuttleBusInfo from '../ShuttleBusInfo';
+//import ShuttleBusInfo from '../ShuttleBusInfo';
+
 
 var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 
@@ -56,33 +57,28 @@ var styles = StyleSheet.create ({
     }
 });
 
-var bus ;
-const routes = [
-            {title:'PMRoute', index: 0},
-            {title: 'ShuttleBusInfo', index: 1},
-            //{title: 'Second Scene', index: 1},
-        ];
+// var bus ;
+// const routes = [
+//     {screen: 'PMRoute', index: 0},
+//     {screen: 'ShuttleBusInfo', index: 1},
+// ]
 
-const EXAMPLE_COMPONENTS = [
-  <ShuttleBusInfo bus={bus}/>
-];
-
-export default class AMroute extends Component {
+export default class PMroute extends Component {
     state = {
-    title: 'AM Route',
-    index: 1,
-    restoring: false,
+        title: 'PMRoute',
+        index: 1,
+        restoring: false,
     // bus: this.props.bus,
   };
 
   
     constructor(props) {
         super(props);
-        bus = this.props.bus;
-        this.showShuttleBusInfo = this.showShuttleBusInfo.bind(this)
+        //bus = this.props.bus;
+        //this.showShuttleBusInfo = this.showShuttleBusInfo.bind(this)
 
         this.state = {
-            objectFromChild: null,
+            //objectFromChild: null,
             isLoading: true, 
             //dataSource is the interface
             dataSource: new ListView.DataSource({
@@ -90,10 +86,10 @@ export default class AMroute extends Component {
             })
         };
     }
-    /** retrieve props child */
+    /** retrieve props child 
     myCallback(dataFromChild) {
         this.setState({ objectFromChild: dataFromChild});
-    }
+    }*/
     componentDidMount() {
         this.fetchData();
         this.showShuttleBusInfo();
@@ -115,9 +111,9 @@ export default class AMroute extends Component {
         .done();
     }
 
+    
     render() {
-        const { index } = this.state;
-        const ExampleComponent = EXAMPLE_COMPONENTS[index] || null;
+     
 
         if (this.state.isLoading) {
             this.renderLoadingView();   
@@ -126,17 +122,30 @@ export default class AMroute extends Component {
         
         return (
           <View style={styles.mainContainer}>
+         
             {/*<NavBar />*/}
             <ListView
                 dataSource = {this.state.dataSource}
                 renderRow = {this.renderBook.bind(this)}
                 style = {styles.listView}
-            />
+               
+           />
+            
             </View>
             
         );
     }
 
+    // _renderScene(route, nav) {
+    //         switch (route.screen) {
+           
+    //         case "ShuttleBusInfo":
+    //             return <ShuttleBusInfo navigator= {nav} bus={route.data} />
+
+    //         default:
+    //             return null;
+    //         }
+    //     };
     renderLoadingView() {
         return (
             <View style = {styles.loading}>
@@ -147,33 +156,18 @@ export default class AMroute extends Component {
         );
     }
 
-     
-
-    _renderScene = (route, props)=> {
-    switch (route.title) {
     
-    case "ShuttleBusInfo":
-       return <ShuttleBusInfo bus={props} />
-    default:
-      return null;
-    }
-  };
-
-   _handleNavigate = index => {
-    this.setState({
-      index,
-    });
-   }
 
     renderBook(bus) {
         console.log("PM ROUTE check for bus:");
         console.log(bus);
         return (
 
+            <View>
             
-            <TouchableOpacity
-                onPress={() => this._renderScene(1, bus)}  underlayColor='#dddddd'>
-                <View>
+            <TouchableOpacity onPress={() => this.showShuttleBusInfo(bus)} >
+                 {/*onPress={() => this.showShuttleBusInfo(bus)} */}
+                
                     <View style = {styles.container}>
                         <View style = {styles.rightContainer}>
                             <Text style = {styles.title}>{bus.name}</Text>
@@ -181,42 +175,24 @@ export default class AMroute extends Component {
                             <Text style = {styles.detail}>{bus.schedule}</Text>
                         </View>
                     </View>
-                    <View style = {styles.separator}/>
-                </View>
+                <View style = {styles.separator}/>
+               
             </TouchableOpacity>
-            
+             </View>
         );
     }
 
-    showShuttleBusInfo = (props) => {
+   
+    
+    showShuttleBusInfo(bus) {
         console.log("showShuttleBusInfo(bus)");
-        console.log(props);
+        console.log(bus);
 
-        return (
-        <ShuttleBusInfo 
-        {...props}/>
-        
-        );
-    /*<Navigator
-        initialRoute={{ key: 'PMRoute'}}
-        renderScene={this._renderScene}/>*/
-            
-       
-
-       //<ShuttleBusInfo callbackFromParent={this.myCallback(bus)}/>
-        // bus = {
-        //     routes: [
-        //         {key: 'ShuttleBusInfo', data: bus}
-        //     ]
-        //}
-         
-    //    this.props.navigator.push({
-    //        //title: book.title,
-    //        //component: ShuttleBusInfo,
-    //        //passProps: {book}
-    //        screen: 'ShuttleBusInfo',
-    //        data: bus
-    //    });
+       this.props.navigator.push({
+           screen: 'ShuttleBusInfo',
+           data: bus
+       });
+    
    }
 
     //back to home

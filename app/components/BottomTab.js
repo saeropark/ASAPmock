@@ -11,6 +11,7 @@ import NavBar from './NavBar';
 import AnnTopTab from './AnnTopTab';
 import BusTopTab from './BusTopTab';
 import Home from '../js/Home';
+import ShuttleBusTabBar from './BusRouteNavigation/ShuttleBusTabBar';
 import Navigation from './Navigation';
 import ShuttleBusList from '../js/ShuttleBusList';
 import ShuttleBusInfo from '../js/ShuttleBusInfo';
@@ -99,7 +100,7 @@ export default class BottomTab extends Component {
     case '1':
       return <Home /> ; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
     case '2':
-      return <TestRoute /> ; //<View style={[ styles.page, { backgroundColor: '#673ab7' } ]} /> changeTab={this._handleChangeTab}
+      return <ShuttleBusTabBar /> ; //<View style={[ styles.page, { backgroundColor: '#673ab7' } ]} /> changeTab={this._handleChangeTab}
     // case '3':
     //   return <View style={[ styles.page, { backgroundColor: '#4caf50' } ]} />;
     default:

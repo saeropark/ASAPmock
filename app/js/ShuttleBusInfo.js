@@ -4,7 +4,7 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight,
+  ActivityIndicator,
   TouchableOpacity,
   ScrollView
 } from 'react-native';
@@ -19,19 +19,42 @@ export default class ShuttleBusInfo extends Component {
     title: 'Route Detail',
     index: 2,
     restoring: false,
+   
   };
 
 //   constructor(props) {
 //         super(props);
-//            bus = this.props.bus;
+//            this.state = {
+//                isLoading: true,
+//            }
        
 //     }
-
+      renderLoadingView() {
+        return (
+            <View style = {styles.loading}>
+                <ActivityIndicator
+                    size = 'large' />
+                <Text> Loading bus... </Text>
+            </View>
+        );
+    }
     render() {
      
         var bus = this.props.bus;
         console.log("Shuttle bus info page");
         console.log(bus);
+
+        // if (typeof bus === 'undefined') {
+        //     if (this.state.isLoading) {
+        //         this.renderLoadingView();
+        //     }
+            
+        // }
+        // else {
+        //     this.setState({
+        //         isLoading: false,
+        //     });
+        // }
         //var features = (typeof buses.features !== 'undefined') ? buses.features : 'no features';
         return (
             

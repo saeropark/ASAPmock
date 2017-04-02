@@ -9,7 +9,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import AnnouncementInfo from './AnnouncementInfo.js';
+import AnnouncementInfo from '../AnnouncementInfo.js';
 var REQUEST_URL = 'https://asap-c4472.firebaseio.com/.json';
 //var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 
@@ -51,7 +51,7 @@ var styles = StyleSheet.create ({
     }
 });
 
-export default class AnnouncementList extends Component {
+export default class EventList extends Component {
 
     constructor(props) {
         super(props);

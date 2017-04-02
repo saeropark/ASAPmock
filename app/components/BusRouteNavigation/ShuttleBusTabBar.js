@@ -22,11 +22,11 @@ var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&ar
 
 
 
-export default class TestRoute extends Component {
-     constructor(props){
-        super(props);
-        //bus = this.props.bus;
-    }
+export default class ShuttleBusTabBar extends Component {
+    //  constructor(props){
+    //     super(props);
+    //     //bus = this.props.bus;
+    // }
         
  state = {
     title: 'Seletar Aerospace',

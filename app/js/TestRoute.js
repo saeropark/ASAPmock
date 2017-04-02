@@ -13,9 +13,9 @@ import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 
 //import ShuttleBusInfo from './ShuttleBusInfo';
-import AMRouteNav from '../components/Navigation/AMRouteNav';
-import PMRouteNav from '../components/Navigation/PMRouteNav';
-import LunchRouteNav from '../components/Navigation/LunchRouteNav';
+import AMRouteNav from '../components/BusRouteNavigation/AMRouteNav';
+import PMRouteNav from '../components/BusRouteNavigation/PMRouteNav';
+import LunchRouteNav from '../components/BusRouteNavigation/LunchRouteNav';
 
 // import AMRoute from './BusRoute/AMRoute';
 // import PMRoute from './BusRoute/PMRoute';

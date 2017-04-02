@@ -4,7 +4,7 @@ import Home from '../js/Home';
 //import BottomTab from './BottomTab';
 import ShuttleBusList from '../js/ShuttleBusList';
 import ShuttleBusInfo from '../js/ShuttleBusInfo';
-import AnnouncementList from '../js/AnnouncementList';
+import AnnouncementList from '../js/AnnouncementLists/AnnouncementList';
 import AnnouncementInfo from '../js/AnnouncementInfo';
 import TestRoute from './TestRoute';
 import AMRoute from './BusRoute/AMRoute';

@@ -8,14 +8,16 @@ import { Animated, View, Text, StyleSheet, Navigator} from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NavBar from './NavBar';
-import AnnTopTab from './AnnTopTab';
-import BusTopTab from './BusTopTab';
+
 import Home from '../js/Home';
+import HomeNav from './HomeNavigation/HomeNav';
 import ShuttleBusTabBar from './BusRouteNavigation/ShuttleBusTabBar';
+import AnnouncementTabBar from './EventNavigation/AnnouncementTabBar';
+
 import Navigation from './Navigation';
 import ShuttleBusList from '../js/ShuttleBusList';
 import ShuttleBusInfo from '../js/ShuttleBusInfo';
-import AnnouncementList from '../js/AnnouncementList';
+//import AnnouncementList from '../js/AnnouncementLists/AnnouncementList';
 import AnnouncementInfo from '../js/AnnouncementInfo';
 import AMRoute from '../js/BusRoute/AMRoute';
 import TestNav from '../js/TestNav';
@@ -98,9 +100,9 @@ export default class BottomTab extends Component {
   _renderTabScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <Home /> ; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
+      return <HomeNav /> ; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
     case '2':
-      return <ShuttleBusTabBar /> ; //<View style={[ styles.page, { backgroundColor: '#673ab7' } ]} /> changeTab={this._handleChangeTab}
+      return <AnnouncementTabBar/> ; //<View style={[ styles.page, { backgroundColor: '#673ab7' } ]} /> changeTab={this._handleChangeTab}
     // case '3':
     //   return <View style={[ styles.page, { backgroundColor: '#4caf50' } ]} />;
     default:

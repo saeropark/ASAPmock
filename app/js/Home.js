@@ -10,6 +10,7 @@ export default class Home extends Component {
         <ScrollView>
         <View style={styles.eventContainer}>
           <Text style={styles.welcome}> Events</Text>
+          
         </View>
 
         <View style={styles.promotionContainer}>

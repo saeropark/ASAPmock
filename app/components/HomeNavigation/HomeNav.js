@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Navigator } from 'react-native';
 
 import Home from '../../js/Home';
+import TopScreen from '../../js/TopScreen';
 import AnnouncementInfo from '../../js/AnnouncementInfo';
 
 export default class HomeNav extends Component {

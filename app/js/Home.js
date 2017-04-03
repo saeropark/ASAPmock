@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, ScrollView, Dimensions, Image} from 'react-native';
+
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NavBar from '../components/NavBar';
 
+import {PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator, ViewPager} from 'rn-viewpager';
+var IMGS = [
+  'https://images.unsplash.com/photo-1441742917377-57f78ee0e582?h=1024',
+  'https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?h=1024',
+  'https://images.unsplash.com/photo-1441448770220-76743f9e6af6?h=1024',
+  'https://images.unsplash.com/photo-1441260038675-7329ab4cc264?h=1024',
+];
 export default class Home extends Component {
+ 
+  
   render() {
     return (
       <View style={styles.container}>
         <ScrollView>
         <View style={styles.eventContainer}>
           <Text style={styles.welcome}> Events</Text>
-          
         </View>
 
         <View style={styles.promotionContainer}>
@@ -23,7 +33,10 @@ export default class Home extends Component {
       </ScrollView>
       </View>
     );
-  }
+  }     
+
+   
+  
 }
 
 const styles = StyleSheet.create({

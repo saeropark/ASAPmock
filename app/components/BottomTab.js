@@ -37,7 +37,7 @@ export default class BottomTab extends Component {
     routes: [
       { key: '1', title: 'Home', icon: 'home' },
       { key: '2', title: 'Bus', icon: 'directions-bus' },
-      //{ key: '3', title: 'Third', icon: 'delete' },
+      { key: '3', title: 'Map', icon: 'place' },
     ],
   };
 
@@ -100,11 +100,11 @@ export default class BottomTab extends Component {
   _renderTabScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <HomeNav /> ; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
+      return <AnnouncementTabBar /> ; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
     case '2':
-      return <AnnouncementTabBar/> ; //<View style={[ styles.page, { backgroundColor: '#673ab7' } ]} /> changeTab={this._handleChangeTab}
-    // case '3':
-    //   return <View style={[ styles.page, { backgroundColor: '#4caf50' } ]} />;
+      return <ShuttleBusTabBar/> ; //<View style={[ styles.page, { backgroundColor: '#673ab7' } ]} /> changeTab={this._handleChangeTab}
+    case '3':
+       return <View style={[ styles.page, { backgroundColor: '#4caf50' } ]} />;
     default:
       return null;
     }

@@ -3,6 +3,7 @@ import {AppRegistry, Navigator, StyleSheet, View} from 'react-native';
 //import Home from './js/Home';
 import BottomTab from './components/BottomTab';
 import Drawer from './components/Drawer';
+import MainNav from './js/MainNav';
 // import ShuttleBusList from './js/ShuttleBusList';
 // import ShuttleBusInfo from './js/ShuttleBusInfo';
 // import AnnouncementList from './js/AnnouncementList';
@@ -12,7 +13,7 @@ export default class ASAPmock extends Component {
     render() {
         return (
             //<View style={styles.container}>
-           <BottomTab />
+           <MainNav/>
             /*<Navigator
                 initialRoute = {{ screen: 'BottomTab'}}
                 renderScene = {(route, nav)=> {return this.renderScene(route, nav)}} />*/

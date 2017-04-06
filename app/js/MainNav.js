@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { Navigator } from 'react-native';
 
 import Main from './Main';
+import ANavHolder from '../components/EventNavigation/ANavHolder';
+import BNavHolder from '../components/BusRouteNavigation/BNavHolder';
 import ShuttleBusTabBar from '../components/BusRouteNavigation/ShuttleBusTabBar';
 import AnnouncementTabBar from '../components/EventNavigation/AnnouncementTabBar';
 
@@ -22,6 +24,10 @@ state = {
             return <ShuttleBusTabBar navigator={nav} />
         case "AnnouncementTabBar":
             return <AnnouncementTabBar navigator={nav}/>
+        case "ANavHolder":
+            return <ANavHolder navigator={nav}/>
+        case "BNavHolder":
+            return <BNavHolder navigator={nav} />
     }
   }
     render() {

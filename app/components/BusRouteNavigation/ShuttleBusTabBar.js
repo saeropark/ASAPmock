@@ -144,7 +144,7 @@ var styles = StyleSheet.create ({
         
     },
     tabbar: {
-    backgroundColor: '#222',
+    backgroundColor: '#b510d3',
   },
   page: {
     flex: 1,

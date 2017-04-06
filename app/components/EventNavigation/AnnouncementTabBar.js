@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity,Text } from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 import AnnouncementNav from './AnnouncementNav';
@@ -33,6 +33,7 @@ export default class AnnouncementTabBar extends Component {
   };
 
   _renderHeader = (props) => {
+    var bColor = '#b510d3';
     return (
       <TabBar
         {...props}
@@ -59,6 +60,7 @@ export default class AnnouncementTabBar extends Component {
 
   render() {
     return (
+      
       <TabViewAnimated
         style={[ styles.container, this.props.style ]}
         navigationState={this.state}
@@ -66,8 +68,11 @@ export default class AnnouncementTabBar extends Component {
         renderHeader={this._renderHeader}
         onRequestChangeTab={this._handleChangeTab}
       />
+    
     );
   }
+
+  
 }
 
 const styles = StyleSheet.create({
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tabbar: {
-    backgroundColor: '#222',
+    backgroundColor: '#b510d3',
   },
   page: {
     flex: 1,

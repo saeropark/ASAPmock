@@ -1,59 +1,108 @@
+/**
+ * https://github.com/react-native-community/react-native-side-menu/blob/master/examples/Basic/Basic.js#L107
+ */
+
 import React, { Component } from 'react';
-import { StyleSheet, Text, View,  Image, Alert} from 'react-native';
-import { Tile, Icon } from 'react-native-elements';
+import { StyleSheet, Text, View,  Image, Alert, TouchableOpacity} from 'react-native';
+import { Tile, Icon ,SideMenu} from 'react-native-elements';
 
 
 //import Icon from 'react-native-vector-icons/MaterialIcons';
 import NavBar from '../components/NavBar';
 import img from '../../img/jtc.jpg';
+import Menu from './Menu';
 
+class Button extends Component {
+  handlePress(e) {
+    if (this.props.onPress) {
+      this.props.onPress(e);
+    }
+  }
 
-export default class Main extends Component {
- 
-  
   render() {
     return (
-    <View style={styles.container}>
-      <Tile
-        imageSrc={img}
-        title="Seletar Aerospace Park"
-        featured
-        caption="What would you like to do?"
-        //icon= {{ name:'ios-american-football', type:'ionicon',color:'#517fa4'}}
-      
-        />
+      <TouchableOpacity
+        onPress={this.handlePress.bind(this)}
+        style={this.props.style}>
+        <View>{this.props.children}</View>
+      </TouchableOpacity>
+    );
+  }
+}
+
+export default class Main extends Component {
+   state = {
+    isOpen: false,
+    selectedItem: 'About',
+  };
+
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  }
+
+  updateMenuState(isOpen) {
+    this.setState({ isOpen, });
+  }
+
+  onMenuItemSelected = (item) => {
+    this.setState({
+      isOpen: false,
+      selectedItem: item,
+    });
+  }
+  render() {
+       const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+    return (
+
+
+        <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={(isOpen) => this.updateMenuState(isOpen)}>
+        <View style={styles.container}>
+            <Button style={styles.button} onPress={() => this.toggle()}>
+               <Icon
+                name='menu'
+                //type='ionicon'
+                color='#ffcc00'
+                />
+            </Button>
+         </View>
+            <Tile
+                
+                imageSrc={img}
+                title="Seletar Aerospace Park"
+                featured
+                caption="What would you like to do?"
+                //icon= {{ name:'ios-american-football', type:'ionicon',color:'#517fa4'}}
+            
+                />
         <View style={styles.iconCon}>
 
-        <Icon
-        reverse
-        name='announcement'
-        //type='ionicon'
-        color='#ffcc00'
-            onPress={() => { 
-            this._onPressAnnouncementButton()
-        }}
-        onLongPress={() => {
-            this._onPressAnnouncementButton()
-        }}
-        />
-      
-        <Icon
-            reverse
-            name='directions-bus'
-            //type='ionicon'
-            color= '#b510d3'//color='#517fa4'
-             onPress={() => { 
-               this._onPressBusButton()
-            }}
-            onLongPress={() => {
-                this._onPressBusButton()
-            }}
+            <Icon
+                reverse
+                name='announcement'
+                //type='ionicon'
+                color='#ffcc00'
+                onPress={() => {  this._onPressAnnouncementButton()}}
+                onLongPress={() => {this._onPressAnnouncementButton()}}
             />
-
-            
+      
+            <Icon
+                reverse
+                name='directions-bus'
+                //type='ionicon'
+                color= '#b510d3'//color='#517fa4'
+                onPress={() => { this._onPressBusButton()}}
+                onLongPress={() => {this._onPressBusButton()}}
+                />
         </View>
-    </View>
-            );
+       
+        </SideMenu>
+ 
+   );
   }  
 
   _onPressBusButton() {
@@ -65,22 +114,28 @@ export default class Main extends Component {
 
   _onPressAnnouncementButton() {
       this.props.navigator.push({
-          screen: 'AnnouncementTabBar'
+          screen: 'ANavHolder'
       });
   }
         
 }
 
+
 const styles = StyleSheet.create({
-    iconCon: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        paddingLeft: 20,
-        paddingTop: -20,
+button: {
+    position: 'absolute',
+    top: 20,
+    padding: 10,
     },
+iconCon: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingLeft: 20,
+    paddingTop: -20,
+},
   container: {
-    flex: 1,
-    //backgroundColor: '#F5FCFF',
+    flex: 0.1,
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,

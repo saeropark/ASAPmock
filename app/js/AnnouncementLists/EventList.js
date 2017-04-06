@@ -48,6 +48,11 @@ var styles = StyleSheet.create ({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    dateColumn: {
+        flexDirection: 'column',
+        flex: 0.2,
+        height: 50,
     }
 });
 
@@ -111,9 +116,18 @@ export default class EventList extends Component {
                 onPress={() => this.showAnnouncementInfo(event)}  underlayColor='#dddddd'>
                 <View>
                     <View style = {styles.container}>
+                        <View style={styles.dateColumn}>
+                            <View style={{backgroundColor: '#b510d3', flex:0.2}}>
+                                <Text style={{color:'white', textAlign:'center'}}>15</Text>
+                            </View>
+                            <View style={{backgroundColor: 'white', flex:0.2}}>
+                                <Text style={{color: '#b51d03', textAlign: 'center'}}>APRIL </Text>
+                            </View>
+                        </View>
+    
                         <View style = {styles.rightContainer}>
-                            <Text style = {styles.title}>{event.title}</Text>
-                            <Text style = {styles.detail}>{event.description}</Text>
+                            <Text style = {styles.title}> {"\t"}{event.title}</Text>
+                            <Text style = {styles.detail}>{"\t"}{event.description}</Text>
                         </View>
                     </View>
                     <View style = {styles.separator}/>

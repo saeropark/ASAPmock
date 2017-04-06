@@ -112,6 +112,7 @@ export default class AnnouncementList extends Component {
                 onPress={() => this.showAnnouncementInfo(event)}  underlayColor='#dddddd'>
                 <View>
                     <View style = {styles.container}>
+                        
                         <View style = {styles.rightContainer}>
                             <Text style = {styles.title}>{event.title}</Text>
                             <Text style = {styles.detail}>{event.description}</Text>

@@ -17,7 +17,7 @@ state = {
          case "LunchRoute":
             return <LunchRoute navigator = {nav} />
         case "ShuttleBusInfo":
-            return <ShuttleBusInfo navigator={nav} bus={route.data} />
+            return <ShuttleBusInfo navigator={nav} busData={route.data} />
     }
   }
     render() {

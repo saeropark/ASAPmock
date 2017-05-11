@@ -8,6 +8,8 @@ import {
   TouchableHighlight,
   ActivityIndicator, Platform
 } from 'react-native';
+import {Icon} from 'react-native-elements';
+import Spinner from 'react-native-loading-spinner-overlay';
 import ShuttleBusInfo from '../ShuttleBusInfo';
 
 var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
@@ -18,7 +20,7 @@ var styles = StyleSheet.create ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#Ffcc00',
+        backgroundColor: '#Ffffff',
         padding: 10
     },
     thumbnail: {
@@ -53,7 +55,16 @@ var styles = StyleSheet.create ({
         backgroundColor: '#ffcc00',
         height: Platform.OS === 'ios' ? 44 : 56,
         
-    }
+    },
+    iconContainer: {
+        flexDirection: 'column',
+        height: undefined,
+    },
+    centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
 });
 
 export default class AMroute extends Component {
@@ -66,6 +77,8 @@ export default class AMroute extends Component {
         super(props);
         
         this.state = {
+            visible: false,
+            animating: true,
             isLoading: true, 
             //dataSource is the interface
             dataSource: new ListView.DataSource({
@@ -76,6 +89,7 @@ export default class AMroute extends Component {
 
     componentDidMount() {
         this.fetchData();
+        
     }
 
     // --- calls Google API ---
@@ -112,10 +126,9 @@ export default class AMroute extends Component {
 
     renderLoadingView() {
         return (
-            <View style = {styles.loading}>
-                <ActivityIndicator
-                    size = 'large' />
-                <Text> Loading bus... </Text>
+            <View style={{flex:1}}>
+               <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#000000'}} />
+      
             </View>
         );
     }
@@ -123,12 +136,22 @@ export default class AMroute extends Component {
      
 
     renderBook(bus) {
+
+       // var replace = this.replaceText(bus)
         return (
 
             <TouchableHighlight 
                 onPress={() => this.showShuttleBusInfo(bus)}  underlayColor='#dddddd'>
                 <View>
                     <View style = {styles.container}>
+                        <View style = {styles.iconContainer}>
+                         <Icon
+                            reverse
+                            name='directions-bus'
+                            color= '#b510d3'//color='#517fa4'
+                            />
+                            <Text style={styles.centering}>{bus.label}</Text>
+                        </View>
                         <View style = {styles.rightContainer}>
                             <Text style = {styles.title}>{bus.name}</Text>
                             <Text style = {styles.detail}>{bus.label}</Text>
@@ -142,13 +165,18 @@ export default class AMroute extends Component {
         );
     }
 
-    showShuttleBusInfo(bus) {
+    // replaceText() {
+
+    // }
+
+    showShuttleBusInfo(busData) {
+        busData =  (typeof busData !== 'undefined') ? busData: '';
        this.props.navigator.push({
            //title: book.title,
            //component: ShuttleBusInfo,
            //passProps: {book}
            screen: 'ShuttleBusInfo',
-           data: bus
+           data: busData
        });
    }
 

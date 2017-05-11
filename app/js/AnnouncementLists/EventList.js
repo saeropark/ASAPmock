@@ -13,51 +13,8 @@ import AnnouncementInfo from '../AnnouncementInfo.js';
 var REQUEST_URL = 'https://asap-c4472.firebaseio.com/.json';
 //var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 
-var styles = StyleSheet.create ({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        padding: 10
-    },
-    thumbnail: {
-        width: 53,
-        height: 81,
-        marginRight: 10
-    },
-    rightContainer: {
-        flex: 1
-    },
-    title: {
-        fontSize: 20,
-        marginBottom: 8
-    },
-    author: {
-        color: '#656565'
-    },
-    separator: {
-        height: 1,
-        backgroundColor: '#dddddd'
-    },
-    listView: {
-        backgroundColor: '#F5FCFF'
-    },
-    loading: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    dateColumn: {
-        flexDirection: 'column',
-        flex: 0.2,
-        height: 50,
-    }
-});
 
 export default class EventList extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -111,23 +68,25 @@ export default class EventList extends Component {
     }
 
     renderBook(event) {
+        var imageURI = '../../../img/SAP.png';
+        if (typeof event.fileURL){
+            imageURI = event.fileURL;
+        }
+        //var imageURI = (typeof event.fileURL !== 'undefined') ? event.fileURL : '../../../img/SAP.png';
         return (
-            <TouchableHighlight 
+           <TouchableHighlight 
                 onPress={() => this.showAnnouncementInfo(event)}  underlayColor='#dddddd'>
                 <View>
                     <View style = {styles.container}>
-                        <View style={styles.dateColumn}>
-                            <View style={{backgroundColor: '#b510d3', flex:0.2}}>
-                                <Text style={{color:'white', textAlign:'center'}}>15</Text>
-                            </View>
-                            <View style={{backgroundColor: 'white', flex:0.2}}>
-                                <Text style={{color: '#b51d03', textAlign: 'center'}}>APRIL </Text>
-                            </View>
-                        </View>
+                       
+                            <Image
+                            style={{width: 100, height: 50}}
+                            source={{uri: imageURI}}
+                        />
     
                         <View style = {styles.rightContainer}>
-                            <Text style = {styles.title}> {"\t"}{event.title}</Text>
-                            <Text style = {styles.detail}>{"\t"}{event.description}</Text>
+                            <Text style = {styles.title}> {event.title}</Text>
+                            <Text style = {styles.detail}>{event.description}</Text>
                         </View>
                     </View>
                     <View style = {styles.separator}/>
@@ -168,3 +127,50 @@ export default class EventList extends Component {
     }
 }
 
+var styles = StyleSheet.create ({
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+        padding: 10
+    },
+    thumbnail: {
+        width: 53,
+        height: 81,
+        marginRight: 10
+    },
+    rightContainer: {
+        flex: 1,
+        padding: 5,
+    },
+    title: {
+        fontSize: 20,
+        paddingBottom: 8,
+        color: '#b510d3',
+    },
+    author: {
+        color: '#656565'
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#dddddd'
+    },
+    listView: {
+        backgroundColor: '#F5FCFF'
+    },
+    loading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    dateColumn: {
+        flexDirection: 'column',
+        flex: 0.2,
+        height: 50,
+    },
+    detail: {
+        padding: 5,
+    }
+});

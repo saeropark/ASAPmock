@@ -12,7 +12,7 @@ import NavBar from './NavBar';
 import Home from '../js/Home';
 import HomeNav from './HomeNavigation/HomeNav';
 import ShuttleBusTabBar from './BusRouteNavigation/ShuttleBusTabBar';
-import AnnouncementTabBar from './EventNavigation/AnnouncementTabBar';
+import AnnounceTabBar from './AnnouncementNavigation/AnnounceTabBar';
 
 import Navigation from './Navigation';
 import ShuttleBusList from '../js/ShuttleBusList';
@@ -100,7 +100,7 @@ export default class BottomTab extends Component {
   _renderTabScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <AnnouncementTabBar /> ; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
+      return <AnnounceTabBar /> ; //<View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />
     case '2':
       return <ShuttleBusTabBar/> ; //<View style={[ styles.page, { backgroundColor: '#673ab7' } ]} /> changeTab={this._handleChangeTab}
     case '3':

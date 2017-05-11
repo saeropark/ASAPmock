@@ -9,7 +9,7 @@ import {
   ActivityIndicator, Platform
 } from 'react-native';
 import ShuttleBusInfo from '../ShuttleBusInfo';
-
+import {Icon } from 'react-native-elements';
 var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 
 var styles = StyleSheet.create ({
@@ -18,7 +18,7 @@ var styles = StyleSheet.create ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#Ffcc00',
+        backgroundColor: '#Ffffff',
         padding: 10
     },
     thumbnail: {
@@ -53,6 +53,15 @@ var styles = StyleSheet.create ({
         backgroundColor: '#ffcc00',
         height: Platform.OS === 'ios' ? 44 : 56,
         
+    },
+    centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+  iconContainer: {
+        flexDirection: 'column',
+        height: undefined,
     }
 });
 
@@ -65,7 +74,7 @@ export default class AMroute extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            animating: true,
             isLoading: true, 
             //dataSource is the interface
             dataSource: new ListView.DataSource({
@@ -114,7 +123,10 @@ export default class AMroute extends Component {
         return (
             <View style = {styles.loading}>
                 <ActivityIndicator
-                    size = 'large' />
+                    animating={this.state.animating}
+                    style={[styles.centering, {height: 80}]}
+                    size = 'large'
+                    color='black' />
                 <Text> Loading bus... </Text>
             </View>
         );
@@ -129,6 +141,14 @@ export default class AMroute extends Component {
                 onPress={() => this.showShuttleBusInfo(bus)}  underlayColor='#dddddd'>
                 <View>
                     <View style = {styles.container}>
+                        <View style = {styles.iconContainer}>
+                         <Icon
+                            reverse
+                            name='directions-bus'
+                            color= '#b510d3'//color='#517fa4'
+                            />
+                            <Text style={styles.centering}>{bus.label}</Text>
+                        </View>
                         <View style = {styles.rightContainer}>
                             <Text style = {styles.title}>{bus.name}</Text>
                             <Text style = {styles.detail}>{bus.label}</Text>
@@ -142,13 +162,14 @@ export default class AMroute extends Component {
         );
     }
 
-    showShuttleBusInfo(bus) {
+    showShuttleBusInfo(busData) {
+        busData =  (typeof busData !== 'undefined') ? busData: '';
        this.props.navigator.push({
            //title: book.title,
            //component: ShuttleBusInfo,
            //passProps: {book}
            screen: 'ShuttleBusInfo',
-           data: bus
+           data: busData
        });
    }
 

@@ -10,7 +10,8 @@ import {
   
 } from 'react-native';
 import ShuttleBusList from './ShuttleBusList';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Icon } from 'react-native-elements';
+
 
 var REQUEST_URL = 'https://api.beeline.sg/routes/63?include_trips=true&include_features=true';
 
@@ -41,7 +42,7 @@ export default class AnnouncementInfo extends Component {
     render() {
      
         var event = this.props.event;
-        var imageURI = (typeof event.fileURL !== 'undefined') ? event.fileURL : '';
+        var imageURI = (typeof event.fileURL !== 'undefined') ? event.fileURL : '../../../img/SAP.png';
         //var imageURI = event.fileURL;
         console.log("Event info page");
         console.log(event);
@@ -58,12 +59,25 @@ export default class AnnouncementInfo extends Component {
                             source={{uri: imageURI}}
                         />
                     </View>
-                    <Text>Date:{event.date}</Text>
-                    <Text>Time: {event.time}</Text>
-                    <Text>Location: {event.location}</Text>
-       
-                    <Text>{event.description}</Text>
-
+                 
+                        <Text style={styles.title}>{event.title}</Text>
+                        <View style={styles.descriptionContainer}>
+                        <View style={styles.iconColumn}>
+                            <Icon
+                                name='today'/>
+                            <Icon
+                                name='schedule'/>
+                            <Icon
+                                name='place'/>
+                        </View>
+                        <View style={styles.rightContainer}>
+                            <Text style={styles.descriptionText}>  Date:{event.date}</Text>
+                            <Text style={styles.descriptionText}>  Time: {event.time}</Text>
+                            <Text style={styles.descriptionText}>  Location: {event.location}</Text>
+                            <Text style={styles.descriptionText}> {event.description}</Text>
+                        </View>
+                        
+                    </View>
                     <TouchableOpacity onPress={this.goBack.bind(this)}>
                         <Text style={styles.buttonText}>Go Back</Text>
                     </TouchableOpacity>
@@ -82,89 +96,45 @@ export default class AnnouncementInfo extends Component {
 }
 
 var styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#F5FCFF'
+    },
     contentContainer: {
        flex:1,
         marginTop: 75,
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    features: {
+        backgroundColor: '#F5FCFF',
         padding: 10,
-        fontSize: 15,
-        color: '#656565'
     },
-    separator: {
-       borderRightWidth: 1,
-       borderColor: '#dddddd',
-       
-   },
-   rectangle: {
-       height: 100,
-       width: 100* 2,
-       backgroundColor: 'white',
-       borderColor: 'black',
-       justifyContent: 'center',
-       alignItems: 'center'
-   },
-   bigRect: {
-       height: 200,
-       width: 200*2,
-       backgroundColor: 'white',
-       borderColor: 'black',
-       justifyContent: 'center',
-       alignItems: 'center'
-   },
-
-   container: {
-        flex: 1,
-        backgroundColor: '#F5FCFF'
-    },
-    image: {
-        width: 107,
-        height: 165,
-        padding: 10
-    },
-    description: {
+    
+    descriptionContainer: {
         padding: 10,
-        fontSize: 15,
-        color: '#656565'
+        flexDirection: 'row'
     },
-     navBar: {
-    flex: 0.08,
-    backgroundColor: '#942b3c'
-    },
-    // contentContainer: {
-    //     flex:0.8,
-    // },
-    iconStyle: {
-        textAlign: 'center',
-        padding: 14,
-        width: 50,
-        color: 'white'
-    },
-    navText: {
-        marginTop: -40,
-        paddingLeft: 50,
-        fontSize: 20,
-        color: 'white'
-    },
-    timeSignage: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#Ffcc00',
-        padding: 10
-    }, 
     rightContainer: {
-        flex: 0.3
+        flex: 1,
+        padding: 5,
     },
-    listButton: {
-        flex:1,
-        backgroundColor: '#ffcc00'
-    },
-    buttonText: {
+
+    title: {
+        padding: 10,
         fontSize: 20,
-        textAlign: 'center'
+        paddingBottom: 8,
+        color: '#b510d3',
+    },
+
+    buttonText: {
+        padding: 10,
+    },
+
+    iconColumn: {
+        flexDirection: 'column',
+        flex: 0.2,
+        height: 50,
+    },
+    
+    descriptionText: {
+        fontSize: 18,
     }
 });

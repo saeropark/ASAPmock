@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Drawer from 'react-native-drawer';
-import SamplePage from '../js/SamplePage';
 import ShuttleBusInfo from '../js/ShuttleBusInfo';
 import ShuttleBusList from '../js/ShuttleBusList';
 

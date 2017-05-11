@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import AnnouncementInfo from '../AnnouncementInfo.js';
+
 var REQUEST_URL = 'https://asap-c4472.firebaseio.com/.json';
 //var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 
@@ -23,16 +24,16 @@ var styles = StyleSheet.create ({
         padding: 10
     },
     thumbnail: {
-        width: 53,
-        height: 81,
-        marginRight: 10
+        padding: 5,
     },
     rightContainer: {
-        flex: 1
+        flex: 1,
+        padding: 5,
     },
     title: {
         fontSize: 20,
-        marginBottom: 8
+        paddingBottom: 8,
+        color: '#b510d3',
     },
     author: {
         color: '#656565'
@@ -48,8 +49,17 @@ var styles = StyleSheet.create ({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    imgThumbnail: {
+        flexDirection: 'column',
+        flex: 0.2,
+        height: 50,
+    },
+    detail: {
+        padding: 5,
     }
 });
+
 
 export default class PromotionList extends Component {
 
@@ -89,7 +99,7 @@ export default class PromotionList extends Component {
         return (
             <ListView
                 dataSource = {this.state.dataSource}
-                renderRow = {this.renderBook.bind(this)}
+                renderRow = {this.renderPromo.bind(this)}
                 style = {styles.listView}
             />
         );
@@ -105,14 +115,29 @@ export default class PromotionList extends Component {
         );
     }
 
-    renderBook(event) {
+    renderPromo(event) {
+       var imageURI = '../../../img/SAP.png';
+        if (typeof event.fileURL){
+            imageURI = event.fileURL;
+        }else{
+            imageURI;
+        }
+        // var img = '../../../img/SAP.png';
+        // var imageURI = (  typeof event.fileURL !== 'undefined') ? event.fileURL:;
         return (
-            <TouchableHighlight 
+           <TouchableHighlight 
                 onPress={() => this.showAnnouncementInfo(event)}  underlayColor='#dddddd'>
                 <View>
                     <View style = {styles.container}>
+
+                             <Image
+                            style={{width: 100, height: 50}}
+                            source={{uri: imageURI}}
+                        />
+    
+
                         <View style = {styles.rightContainer}>
-                            <Text style = {styles.title}>{event.title}</Text>
+                            <Text style = {styles.title}> {event.title}</Text>
                             <Text style = {styles.detail}>{event.description}</Text>
                         </View>
                     </View>

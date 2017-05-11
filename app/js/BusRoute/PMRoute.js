@@ -9,7 +9,7 @@ import {
   ActivityIndicator, Platform, Navigator
 } from 'react-native';
 //import ShuttleBusInfo from '../ShuttleBusInfo';
-
+import {Icon } from 'react-native-elements';
 
 var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 
@@ -19,7 +19,7 @@ var styles = StyleSheet.create ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#Ffcc00',
+        backgroundColor: '#Ffffff',
         padding: 10
     },
     thumbnail: {
@@ -54,6 +54,20 @@ var styles = StyleSheet.create ({
         backgroundColor: '#ffcc00',
         height: Platform.OS === 'ios' ? 44 : 56,
         
+    },
+    centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+  iconContainer: {
+        flexDirection: 'column',
+        height: undefined,
     }
 });
 
@@ -78,6 +92,7 @@ export default class PMroute extends Component {
         //this.showShuttleBusInfo = this.showShuttleBusInfo.bind(this)
 
         this.state = {
+            animating: true,
             //objectFromChild: null,
             isLoading: true, 
             //dataSource is the interface
@@ -92,7 +107,7 @@ export default class PMroute extends Component {
     }*/
     componentDidMount() {
         this.fetchData();
-        this.showShuttleBusInfo();
+        // this.showShuttleBusInfo();
     }
 
     // --- calls Google API ---
@@ -116,7 +131,7 @@ export default class PMroute extends Component {
      
 
         if (this.state.isLoading) {
-            this.renderLoadingView();   
+            this.renderLoadingView.bind();   
         }
        
         
@@ -150,7 +165,10 @@ export default class PMroute extends Component {
         return (
             <View style = {styles.loading}>
                 <ActivityIndicator
-                    size = 'large' />
+                    animating={this.state.animating}
+                    style={[styles.centering, {height: 80}]}
+                    size = 'large'
+                    color='black' />
                 <Text> Loading bus... </Text>
             </View>
         );
@@ -169,6 +187,14 @@ export default class PMroute extends Component {
                  {/*onPress={() => this.showShuttleBusInfo(bus)} */}
                 
                     <View style = {styles.container}>
+                        <View style = {styles.iconContainer}>
+                         <Icon
+                            reverse
+                            name='directions-bus'
+                            color= '#b510d3'//color='#517fa4'
+                            />
+                            <Text style={styles.centering}>{bus.label}</Text>
+                        </View>
                         <View style = {styles.rightContainer}>
                             <Text style = {styles.title}>{bus.name}</Text>
                             <Text style = {styles.detail}>{bus.label}</Text>
@@ -184,13 +210,14 @@ export default class PMroute extends Component {
 
    
     
-    showShuttleBusInfo(bus) {
+    showShuttleBusInfo(busData) {
         console.log("showShuttleBusInfo(bus)");
-        console.log(bus);
+        console.log(busData);
 
+        busData =  (typeof busData !== 'undefined') ? busData: '';
        this.props.navigator.push({
            screen: 'ShuttleBusInfo',
-           data: bus
+           data: busData
        });
     
    }

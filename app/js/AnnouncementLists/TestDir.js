@@ -47,25 +47,14 @@ export default class TestDir extends Component {
         })
         .done();
     }
-    render() {
-       
-        return (
-           <View style={styles.container}>
-                <ListCollapseView/>
-            </View>
-        );
-    }
 
-    
-    
+    //----- getList will create as a new object called newList and store into an array called DIR_LIST. Will be called later under ListCollapseView
     getList(obj){
         DIR_LIST.length=0;
         try{
-        var noOfDir = obj.length;
-        
+            var noOfDir = obj.length;   
             for (var i=1; i<noOfDir+1; i++ ){
-                var newName = obj[i].name;
-                
+                var newName = obj[i].name; 
                 var newAddress = obj[i].address;
                 var newHours = obj[i].hours;
                 var newType = obj[i].type;
@@ -87,8 +76,14 @@ export default class TestDir extends Component {
         catch (err) {
             console.log("error: " + err);
         }
+    }
 
-        
+    render() {
+        return (
+           <View style={styles.container}>
+                <ListCollapseView/>
+            </View>
+        );
     }
 }
 

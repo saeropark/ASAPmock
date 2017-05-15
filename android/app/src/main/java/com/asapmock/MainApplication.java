@@ -1,7 +1,7 @@
 package com.asapmock;
 
 import android.app.Application;
-
+import com.reactnative.photoview.PhotoViewPackage;
 import com.facebook.react.ReactApplication;
 import com.keyee.pdfview.PDFView;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -27,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
            
             new PDFView(),
-            new MapsPackage()
+            new MapsPackage(),
+            new PhotoViewPackage()
       );
     }
 

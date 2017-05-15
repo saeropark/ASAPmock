@@ -15,6 +15,7 @@ import { TabNavigator } from "react-navigation";
 
 import AboutOval from '../../js/AnnouncementLists/AboutOval';
 import PromotionNav from './PromotionNav';
+import TestDir from '../../js/AnnouncementLists/TestDir';
 
 class OvalTab extends React.Component {
   static navigationOptions = {
@@ -30,7 +31,7 @@ class DirectoryTab extends React.Component {
         tabBarLabel: 'Directory'
     }
   render() {
-    return <Text>List of all contacts</Text>
+    return <TestDir/>
   }
 }
 

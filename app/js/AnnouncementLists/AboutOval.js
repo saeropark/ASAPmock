@@ -39,12 +39,6 @@ export default class AboutOval extends Component {
               <Text> THE OVAL </Text>
               <Text> THE OVAL </Text>
 
-              <Text> THE OVAL </Text>
-              <Text> THE OVAL </Text>
-              <Text> THE OVAL </Text>
-              <Text> THE OVAL </Text>
-              <Text> THE OVAL </Text>
-              <Text> THE OVAL </Text>
 
               <View style={styles.followUs}>
                 <Text>Follow us on Facebook!</Text>

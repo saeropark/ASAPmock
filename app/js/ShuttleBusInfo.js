@@ -67,35 +67,21 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 // ];
 
 export default class ShuttleBusInfo extends Component {
-  //   state = {
-  //   title: 'Route Detail',
-  //   index: 2,
-  //   restoring: false,
-   
-  // };
+
   constructor(props) {
     super(props);
     console.log("constructor(props)");
     bus = this.props.busData;
-    //id = bus.id;
+
 
     this.state ={
         visible: false,
         bus: this.props.busData? this.props.busData: null,
         markers: [],
-        //title: 'Route Details',
-        index: 2,
         restoring: false,
         animating: true,
         isLoading: false,
-      //busData: this.props.bus,
-      
-       //id: this.props.bus? this.props.bus.id:null,
-    //   features: this.props.bus? this.props.bus.features:null,
-     //  name: this.props.bus? this.props.bus.name:null,
-      // signage: this.props.bus? this.props.bus.notes.signage:null,
-     
-
+ 
     }
     console.log(bus);
   }

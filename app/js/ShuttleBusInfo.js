@@ -43,28 +43,6 @@ const firebaseConfig = {
     messagingSenderId: "625916539957",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-// const CONTENT = [
-//   {
-//     title: 'First',
-//     content: BACON_IPSUM,
-//   },
-//   {
-//     title: 'Second',
-//     content: BACON_IPSUM,
-//   },
-//   {
-//     title: 'Third',
-//     content: BACON_IPSUM,
-//   },
-//   {
-//     title: 'Fourth',
-//     content: BACON_IPSUM,
-//   },
-//   {
-//     title: 'Fifth',
-//     content: BACON_IPSUM,
-//   },
-// ];
 
 export default class ShuttleBusInfo extends Component {
 
@@ -72,7 +50,6 @@ export default class ShuttleBusInfo extends Component {
     super(props);
     console.log("constructor(props)");
     bus = this.props.busData;
-
 
     this.state ={
         visible: false,
@@ -99,6 +76,7 @@ export default class ShuttleBusInfo extends Component {
     
   }
 
+  //fetchData fetches data from URL and get bus stop details from beeline for markers
   async fetchData() {
       fetch(this.requestURL(bus))
       .then((response) => response.json())
@@ -117,6 +95,7 @@ export default class ShuttleBusInfo extends Component {
       .done();
   }
 
+  //fetchStops fetches data from URL and get bus stop timings from firebase
   fetchStops(){
       fetch(REQUEST_URL)
       .then((response) => response.json())
@@ -125,6 +104,7 @@ export default class ShuttleBusInfo extends Component {
       })
   }
 
+  //request url from beeline
   requestURL(bus){
      //id = bus.id;
      console.log(bus);
@@ -141,7 +121,6 @@ export default class ShuttleBusInfo extends Component {
   render() {
 
     console.log("render()");
-    //bus = this.props.busData;
     var id =  (typeof bus.id !== 'undefined') ? bus.id: null;
     var name = (typeof bus.name !== 'undefined') ? bus.name: null;
     var signages = (typeof bus.notes.signage !== 'undefined') ? bus.notes.signage:  null;
@@ -149,9 +128,6 @@ export default class ShuttleBusInfo extends Component {
     console.log(id);
     var results = this.requestURL.bind(id);
     console.log(bus);
-     //id = bus.id;
-    //  name = bus.name;
-    // signage: bus.notes.signage;
     if (this.state.showLoading === true) {
       this.renderLoadingView();
     }
@@ -180,6 +156,7 @@ export default class ShuttleBusInfo extends Component {
                   <MapView.Marker 
                     coordinate={marker.coordinates}
                     title={marker.title}
+                    key={marker.id}
                   />
                 ))}
                 
@@ -242,6 +219,7 @@ export default class ShuttleBusInfo extends Component {
         console.log(stopsArray);
     }
 
+    //retrieve bus stop description from retrieved objects and pass into markersArray
   getBusStopDescriptions(obj){
     console.log("On getBusStopDescriptions()");
     console.log(obj);
@@ -249,41 +227,36 @@ export default class ShuttleBusInfo extends Component {
     CONTENT.length = 0;
 
     try{
-
-      
         var noOfTrips = obj.trips.length - 1;
         var noOfBusStops = obj.trips[noOfTrips].tripStops.length;
 
         for (var i = 0; i < noOfBusStops; i++){
 
+            //get markers information
             var busStopNo = i + 1;
             var desc = obj.trips[noOfTrips].tripStops[i].stop.description;
             var lat = obj.trips[noOfTrips].tripStops[i].stop.coordinates.coordinates[1];
             var lng = obj.trips[noOfTrips].tripStops[i].stop.coordinates.coordinates[0];
 
+            //create object and push markers info to markersArray
             var stop =  new Object();
             stop.title = desc;
             var latlng = new Object;
             latlng.latitude = lat;
             latlng.longitude = lng;
             stop.coordinates = latlng;
+            stop.id = busStopNo;
             markersArray.push(stop);
 
+            //create object and push timings to CONTENT
             var newStop = new Object();
-            newStop.title = desc;
+            newStop.title = busStopNo + ". " + desc;
             if(stopsArray[i].timings != 'undefined'){
                 newStop.content = stopsArray[i].timings;
             } else {
                 newStop.content = "Timing to be added";
             }
             CONTENT.push(newStop);
-
-            console.log("");
-            console.log(stop);
-            console.log("Bus stop " + busStopNo + " info");
-            console.log("Name: " + desc);
-            console.log("lat: " + lat + ", lng: " + lng);
-        
       }
     }
     catch(err){

@@ -38,7 +38,7 @@ class PastTab extends React.Component {
         tabBarLabel: 'Past'
     }
   render() {
-    return <Text>List of Past Events</Text>
+    return <PastList/>
   }
 }
 
@@ -72,7 +72,7 @@ class EventList extends React.Component {
         .then((responseData) => {
             //responseData = this.removeDuplicates(responseData);
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(responseData.Event),
+                dataSource: this.state.dataSource.cloneWithRows(this.sortObjects(responseData)),
                 //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
                 isLoading: false
             });
@@ -97,7 +97,14 @@ class EventList extends React.Component {
                 onPress={() => this.testOnPress(event)}>
                 <View>
                     <View style = {styles.container}>
-                       
+                       <View style={styles.dateColumn}>
+                            <View style={{backgroundColor: '#b510d3', flex:0.2}}>
+                                <Text style={{color:'white', textAlign:'center'}}> {event.date} </Text>
+                            </View>
+                            <View style={{backgroundColor: 'white', flex:0.2}}>
+                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                            </View>
+                        </View>
                    
                         <View style = {styles.rightContainer}>
                             <Text style = {styles.title}> {event.title}</Text>
@@ -112,26 +119,7 @@ class EventList extends React.Component {
 
     testOnPress(event) {
         console.log("TestonPress");
-
         this.props.navigation.navigate('Info', {event});
-
-       //this.props.navigation.navigate('Info', {data: event.title });
-       
-    //    this.props.navigation.navigate('List',  {}, {
-    //                     type: "Navigate", 
-    //                     routeName: "Upcoming",
-    //                     action: {
-    //                         type: "Navigate", 
-    //                         routeName: "Home", 
-    //                         action : {
-    //                             type: "Navigate",
-    //                             routeName: "Info",
-    //                             params: {data: event.title}
-                                
-    //                         }
-                        
-    //                     }
-    //             })
     }
 
     /* to filter JSON data by making the name unique */
@@ -147,6 +135,171 @@ class EventList extends React.Component {
             }
         });
         return array;
+    }
+
+    // Sort announcements and events based on upcoming
+    sortObjects(obj){
+        var announcements = obj.Announcement;
+        var events = obj.Event;
+        var announcementKeys = Object.keys(announcements);
+        var eventKeys = Object.keys(events);
+        var upcoming = {};
+        var nowDate = new Date();
+
+        for(var i = 0; i < eventKeys.length; i++) {
+            var key = eventKeys[i];
+            var eventDate = new Date(events[key].date);
+            if (eventDate > nowDate){
+                console.log(events[key].title + " is on Upcoming List");
+                upcoming[key] = events[key];
+            } else {
+                console.log(events[key].title + " is on Past List");
+            }
+        }
+
+        for(var x = 0; x < announcementKeys.length; x++) {
+            var key = announcementKeys[x];
+            var announcementDate = new Date(announcements[key].date);
+            if (announcementDate > nowDate){
+                console.log(announcements[key].title + " is on Upcoming List");
+                upcoming[key] = announcements[key];
+            } else {
+                console.log(announcements[key].title + " is on Past List");
+            }
+        }
+
+        return upcoming;
+    }
+} 
+
+
+//======= UNDER PAST TABS ==============
+class PastList extends React.Component {
+    static navigationOptions = ({ navigation }) => ({
+     header: null,
+    });
+
+    constructor(props) {
+    super(props);
+    const navigate = this.props.navigation;
+    //const { navigate } = this.props.navigation;
+    this.state = {
+        isLoading: true, 
+        //dataSource is the interface
+        dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2)=> row1 !== row2
+        })
+    };
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    // --- calls Google API ---
+    fetchData() {
+        fetch(REQUEST_URL)
+        .then((response) => response.json())
+        .then((responseData) => {
+            //responseData = this.removeDuplicates(responseData);
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(this.sortObjects(responseData)),
+                //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
+                isLoading: false
+            });
+        })
+        .done();
+    }
+    render() {
+      //const { navigate } = this.props.navigation;
+        return (
+            <ListView
+                dataSource = {this.state.dataSource}
+                renderRow = {this.renderEvent.bind(this)}
+                style = {styles.listView}
+            />
+        );
+    }
+
+
+    renderEvent(event) {
+        return (
+           <TouchableHighlight 
+                onPress={() => this.testOnPress(event)}>
+                <View>
+                    <View style = {styles.container}>
+                       <View style={styles.dateColumn}>
+                            <View style={{backgroundColor: '#b510d3', flex:0.2}}>
+                                <Text style={{color:'white', textAlign:'center'}}> {event.date} </Text>
+                            </View>
+                            <View style={{backgroundColor: 'white', flex:0.2}}>
+                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                            </View>
+                        </View>
+                   
+                        <View style = {styles.rightContainer}>
+                            <Text style = {styles.title}> {event.title}</Text>
+                            <Text style = {styles.detail}>{event.description}</Text>
+                        </View>
+                    </View>
+                    <View style = {styles.separator}/>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+
+    testOnPress(event) {
+        console.log("TestonPress");
+        this.props.navigation.navigate('Info', {event});
+    }
+
+    /* to filter JSON data by making the name unique */
+    removeDuplicates(obj){
+        var array = obj;
+        var seenObj = {};
+        array = array.filter(function(currentObject) {
+            if (currentObject.name in seenObj) {
+                return false;
+            } else {
+                seenObj[currentObject.name] = true;
+                return true;
+            }
+        });
+        return array;
+    }
+
+    // Sort announcements and events based on upcoming
+    sortObjects(obj){
+        var announcements = obj.Announcement;
+        var events = obj.Event;
+        var announcementKeys = Object.keys(announcements);
+        var eventKeys = Object.keys(events);
+        var upcoming = {};
+        var nowDate = new Date();
+
+        for(var i = 0; i < eventKeys.length; i++) {
+            var key = eventKeys[i];
+            var eventDate = new Date(events[key].date);
+            if (eventDate <= nowDate){
+                console.log(events[key].title + " is on Upcoming List");
+                upcoming[key] = events[key];
+            } else {
+                console.log(events[key].title + " is on Past List");
+            }
+        }
+
+        for(var x = 0; x < announcementKeys.length; x++) {
+            var key = announcementKeys[x];
+            var announcementDate = new Date(announcements[key].date);
+            if (announcementDate <= nowDate){
+                console.log(announcements[key].title + " is on Upcoming List");
+                upcoming[key] = announcements[key];
+            } else {
+                console.log(announcements[key].title + " is on Past List");
+            }
+        }
+
+        return upcoming;
     }
 } 
 
@@ -164,16 +317,16 @@ class EventDetail extends React.Component {
     });
     
      render() {
-        var object = this.props.navigation.state;
+        const {params} = this.props.navigation.state;
             console.log("Event info page");
-            console.log(object);
+            console.log(params);
 
         return (
             
             <View style={styles.container}>
                 <ScrollView>
                 <View style={styles.contentContainer}>
-                        <Text> Title?: {object.params.event.title}</Text>
+                        <Text> Title?: {params.event.title}</Text>
                     </View>
                 </ScrollView>
         </View>
@@ -182,13 +335,26 @@ class EventDetail extends React.Component {
     }
 }
     
+const PastStack = StackNavigator({
+    PList: {screen: PastList},
+    PInfo: {screen: EventDetail},
+    
+},
+ { initialRoute: 'PList',
+     mode: 'modal' } // this is needed to make sure header is hidden on ios
+ );
+ PastStack.navigationOptions = {
+  header: null,
+
+};
 
 const AnnStack = StackNavigator({
     List: {screen: EventList},
     Info: {screen: EventDetail},
     
 },
- { mode: 'modal' } // this is needed to make sure header is hidden on ios
+ { initialRoute: 'List',
+     mode: 'modal' } // this is needed to make sure header is hidden on ios
  );
  AnnStack.navigationOptions = {
   header: null,
@@ -196,18 +362,20 @@ const AnnStack = StackNavigator({
 };
 
 
+
 const EventTab = TabNavigator({
     Upcoming: { screen: AnnStack },
-    Past: { screen: PastTab },
+    Past: { screen: PastStack },
 },
-    { mode: 'modal' } // this is needed to make sure header is hidden on ios
+    { initialRoute: 'Upcoming',
+        mode: 'modal' } // this is needed to make sure header is hidden on ios
 );
 
 const EventStack = StackNavigator({
     Home: {screen: EventTab},
     // List: {screen: EventList},
     // Info: {screen: EventDetail},
-},
+},{initialRoute: 'Home',}
 
 );
 

@@ -16,9 +16,9 @@ import {
 import { StackNavigator, navigate } from 'react-navigation';
 import { TabNavigator } from "react-navigation";
 
-import AnnouncementNav from './AnnouncementNav';
-import AnnouncementList from '../../js/AnnouncementLists/AnnouncementList';
-import AnnouncementInfo from '../../js/AnnouncementInfo';
+// import AnnouncementNav from './AnnouncementNav';
+// import AnnouncementList from '../../js/AnnouncementLists/AnnouncementList';
+// import AnnouncementInfo from '../../js/AnnouncementInfo';
 
 var REQUEST_URL = 'https://asap-c4472.firebaseio.com/.json';
 var event;
@@ -42,17 +42,244 @@ class PastTab extends React.Component {
   }
 }
 
+//======= UNDER UPCOMING TABS ==============
 class EventList extends React.Component {
-  render() {
-    return <AnnouncementNav/>
-  }
-}
+    static navigationOptions = ({ navigation }) => ({
+     header: null,
+    });
+
+    constructor(props) {
+    super(props);
+    const navigate = this.props.navigation;
+    //const { navigate } = this.props.navigation;
+    this.state = {
+        isLoading: true, 
+        //dataSource is the interface
+        dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2)=> row1 !== row2
+        })
+    };
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    // --- calls Google API ---
+    fetchData() {
+        fetch(REQUEST_URL)
+        .then((response) => response.json())
+        .then((responseData) => {
+            //responseData = this.removeDuplicates(responseData);
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(responseData.Event),
+                //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
+                isLoading: false
+            });
+        })
+        .done();
+    }
+    render() {
+      //const { navigate } = this.props.navigation;
+        return (
+            <ListView
+                dataSource = {this.state.dataSource}
+                renderRow = {this.renderEvent.bind(this)}
+                style = {styles.listView}
+            />
+        );
+    }
+
+
+    renderEvent(event) {
+        return (
+           <TouchableHighlight 
+                onPress={() => this.testOnPress(event)}>
+                <View>
+                    <View style = {styles.container}>
+                       
+                   
+                        <View style = {styles.rightContainer}>
+                            <Text style = {styles.title}> {event.title}</Text>
+                            <Text style = {styles.detail}>{event.description}</Text>
+                        </View>
+                    </View>
+                    <View style = {styles.separator}/>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+
+    testOnPress(event) {
+        console.log("TestonPress");
+
+        this.props.navigation.navigate('Info', {event});
+
+       //this.props.navigation.navigate('Info', {data: event.title });
+       
+    //    this.props.navigation.navigate('List',  {}, {
+    //                     type: "Navigate", 
+    //                     routeName: "Upcoming",
+    //                     action: {
+    //                         type: "Navigate", 
+    //                         routeName: "Home", 
+    //                         action : {
+    //                             type: "Navigate",
+    //                             routeName: "Info",
+    //                             params: {data: event.title}
+                                
+    //                         }
+                        
+    //                     }
+    //             })
+    }
+
+    /* to filter JSON data by making the name unique */
+    removeDuplicates(obj){
+        var array = obj;
+        var seenObj = {};
+        array = array.filter(function(currentObject) {
+            if (currentObject.name in seenObj) {
+                return false;
+            } else {
+                seenObj[currentObject.name] = true;
+                return true;
+            }
+        });
+        return array;
+    }
+} 
+
 
 class EventDetail extends React.Component {
-    render() {
-        return <AnnouncementInfo/>
+    constructor(props) {
+        super(props);
+      //event = this.props.navigation.state.event;
+      
+    }
+
+    static navigationOptions = ({ navigation }) => ({
+        header: null,
+       // title: `Title: ${navigation.state.params.data}`,
+    });
+    
+     render() {
+        var object = this.props.navigation.state;
+            console.log("Event info page");
+            console.log(object);
+
+        return (
+            
+            <View style={styles.container}>
+                <ScrollView>
+                <View style={styles.contentContainer}>
+                        <Text> Title?: {object.params.event.title}</Text>
+                    </View>
+                </ScrollView>
+        </View>
+        );
+       
     }
 }
+    
+
+const AnnStack = StackNavigator({
+    List: {screen: EventList},
+    Info: {screen: EventDetail},
+    
+},
+ { mode: 'modal' } // this is needed to make sure header is hidden on ios
+ );
+ AnnStack.navigationOptions = {
+  header: null,
+
+};
+
+
+const EventTab = TabNavigator({
+    Upcoming: { screen: AnnStack },
+    Past: { screen: PastTab },
+},
+    { mode: 'modal' } // this is needed to make sure header is hidden on ios
+);
+
+const EventStack = StackNavigator({
+    Home: {screen: EventTab},
+    // List: {screen: EventList},
+    // Info: {screen: EventDetail},
+},
+
+);
+
+EventStack.navigationOptions = {
+    header: "22222",
+    title: "Events & Announcements 2",
+
+};
+
+ 
+ export default EventTab;
+
+var styles = StyleSheet.create ({
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+        padding: 10
+    },
+    thumbnail: {
+        width: 53,
+        height: 81,
+        marginRight: 10
+    },
+    rightContainer: {
+        flex: 1,
+        padding: 5,
+    },
+    title: {
+        fontSize: 20,
+        paddingBottom: 8,
+        color: '#b510d3',
+    },
+    author: {
+        color: '#656565'
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#dddddd'
+    },
+    listView: {
+        backgroundColor: '#F5FCFF'
+    },
+    loading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    dateColumn: {
+        flexDirection: 'column',
+        flex: 0.2,
+        height: 50,
+    },
+    detail: {
+        padding: 5,
+    }
+});
+
+
+// class EventList extends React.Component {
+//   render() {
+//     return <AnnouncementNav/>
+//   }
+// }
+
+// class EventDetail extends React.Component {
+//     render() {
+//         return <AnnouncementInfo/>
+//     }
+// }
 //======= UNDER UPCOMING TABS ==============
 // class EventList extends React.Component {
   
@@ -270,72 +497,72 @@ class EventDetail extends React.Component {
 //     Info: {screen: EventDetail},
 // })
 
-const EventTab = TabNavigator({
-    Upcoming: { screen: UpcomingTab },
-    Past: { screen: PastTab },
-    // List: {screen: EventList},
-    // Info: {screen: EventDetail},
-},
-    { mode: 'modal' } // this is needed to make sure header is hidden on ios
-);
+// const EventTab = TabNavigator({
+//     Upcoming: { screen: UpcomingTab },
+//     Past: { screen: PastTab },
+//     // List: {screen: EventList},
+//     // Info: {screen: EventDetail},
+// },
+//     { mode: 'modal' } // this is needed to make sure header is hidden on ios
+// );
 
-const EventStack = StackNavigator({
-    Home: {screen: EventTab},
-    List: {screen: EventList},
-    Info: {screen: EventDetail},
-})
+// const EventStack = StackNavigator({
+//     Home: {screen: EventTab},
+//     List: {screen: EventList},
+//     Info: {screen: EventDetail},
+// })
 
-EventTab.navigationOptions = {
-  header: null,
+// EventTab.navigationOptions = {
+//   header: null,
 
-};
+// };
 
-export default EventStack;
+// export default EventStack;
 
-var styles = StyleSheet.create ({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        padding: 10
-    },
-    thumbnail: {
-        width: 53,
-        height: 81,
-        marginRight: 10
-    },
-    rightContainer: {
-        flex: 1,
-        padding: 5,
-    },
-    title: {
-        fontSize: 20,
-        paddingBottom: 8,
-        color: '#b510d3',
-    },
-    author: {
-        color: '#656565'
-    },
-    separator: {
-        height: 1,
-        backgroundColor: '#dddddd'
-    },
-    listView: {
-        backgroundColor: '#F5FCFF'
-    },
-    loading: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    dateColumn: {
-        flexDirection: 'column',
-        flex: 0.2,
-        height: 50,
-    },
-    detail: {
-        padding: 5,
-    }
-});
+// var styles = StyleSheet.create ({
+//     container: {
+//         flex: 1,
+//         flexDirection: 'row',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         backgroundColor: '#F5FCFF',
+//         padding: 10
+//     },
+//     thumbnail: {
+//         width: 53,
+//         height: 81,
+//         marginRight: 10
+//     },
+//     rightContainer: {
+//         flex: 1,
+//         padding: 5,
+//     },
+//     title: {
+//         fontSize: 20,
+//         paddingBottom: 8,
+//         color: '#b510d3',
+//     },
+//     author: {
+//         color: '#656565'
+//     },
+//     separator: {
+//         height: 1,
+//         backgroundColor: '#dddddd'
+//     },
+//     listView: {
+//         backgroundColor: '#F5FCFF'
+//     },
+//     loading: {
+//         flex: 1,
+//         alignItems: 'center',
+//         justifyContent: 'center'
+//     },
+//     dateColumn: {
+//         flexDirection: 'column',
+//         flex: 0.2,
+//         height: 50,
+//     },
+//     detail: {
+//         padding: 5,
+//     }
+// });

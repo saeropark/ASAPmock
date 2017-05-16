@@ -207,7 +207,9 @@ const HomeStack = StackNavigator({
     SAPMap: {screen: MapSAP},
     
     //Collapse: {screen: CollapseView},
-})
+},
+
+)
 
 /**
  * DrawerNavigator is a sidebar functionality that calls the sliding panel.

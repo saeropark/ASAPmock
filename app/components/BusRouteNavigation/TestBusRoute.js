@@ -28,7 +28,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import MapView from 'react-native-maps';
 import {Button, Icon} from 'react-native-elements';
 
-var REQUEST_URL = 'https://asap-c4472.firebaseio.com/BusRoutes.json';
+var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 var CONTENT = [];
 
 var {height, width} = Dimensions.get('window');

@@ -9,12 +9,13 @@ import {
   Platform,
 } from 'react-native';
 import { StackNavigator, DrawerNavigator} from 'react-navigation';
-import { Icon } from 'react-native-elements'
+import { Icon , Button} from 'react-native-elements'
 
 import ContactUs from './SidebarList/ContactUs';
 import AboutJTC from './SidebarList/AboutJTC';
 import TenantDirectory from './SidebarList/TenantDirectory';
 import SAPMap from './SidebarList/SAPMap';
+import TestDir from './AnnouncementLists/TestDir';
 
 import FoodStack from '../components/EventNavigation/TestFnB';
 import EventStack from '../components/AnnouncementNavigation/TestEventAnn';
@@ -42,9 +43,12 @@ class MyHomeScreen extends React.Component {
   render() {
     return (
         <View style= {styles.container}>
+        
          <Image
-          source={require('../../img/SAPjtc.jpg')}
+          source={require('../../img/avia1.jpg')}
           style={styles.imgContainer}>
+          
+         <View style={{padding: 80, backgroundColor: 'rgba(52, 52, 52, 0.6)'}}>
           <Text style={styles.welcome}>
             What would you like to do?
           </Text>
@@ -53,6 +57,7 @@ class MyHomeScreen extends React.Component {
           </Text>
            <View style={styles.iconCon}>
                <View style={styles.iconContainer}>
+                
             <Icon
                 reverse
                 name='event'
@@ -64,6 +69,7 @@ class MyHomeScreen extends React.Component {
             </View>
             
             <View style = {styles.iconContainer}>
+            
             <Icon
                 reverse
                 name='local-dining'
@@ -83,6 +89,7 @@ class MyHomeScreen extends React.Component {
                 />
                 <Text style={styles.instructions}>Shuttle bus</Text>
             </View>
+        </View>
         </View>
       </Image>
       </View>
@@ -124,7 +131,7 @@ class Tenant extends React.Component {
     });
     render() {
         const { params } = this.props.navigation.state;
-        return <TenantDirectory />
+        return <TestDir />
     }
 }
 
@@ -279,7 +286,7 @@ imgContainer: {
 iconCon: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingLeft: 20,
+ 
     paddingTop: -20,
 },
   contentContainer: {
@@ -288,7 +295,7 @@ iconCon: {
   iconStyle: {
     textAlign: 'center',
     padding: 14,
-    width: 50,
+    
     color: 'white'
   },
 });

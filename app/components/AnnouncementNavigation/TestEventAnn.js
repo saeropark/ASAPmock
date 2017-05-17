@@ -343,22 +343,26 @@ class EventDetail extends React.Component {
                         
                         <Text style={styles.title}>{params.event.title}</Text>
                         <View style={styles.descriptionContainer}>
-                            <View style={styles.iconColumn}>
+                           
+                            <View style={styles.iconText}>
                                 <Icon
                                     name='today'/>
+                                 <Text style={styles.descriptionText}> {params.event.date}</Text>
+                            </View>
+                            <View style={styles.iconText}>
                                 <Icon
                                     name='schedule'/>
+                                    <Text style={styles.descriptionText}> {params.event.time}</Text>
+                            </View>
+                            <View style={styles.iconText}>
                                 <Icon
                                     name='place'/>
+                                <Text style={styles.descriptionText}> {params.event.location}</Text>
                             </View>
-                            <View style={styles.rightContainer}>
-                                <Text style={styles.descriptionText}>  Date:{params.event.date}</Text>
-                                <Text style={styles.descriptionText}>  Time: {params.event.time}</Text>
-                                <Text style={styles.descriptionText}>  Location: {params.event.location}</Text>
                                 <Text style={styles.descriptionText}> {params. event.description}</Text>
                             </View>
-                        
-                </View>
+                    
+                
                 <Button
                     color = "#FFFFFF"
                     title ="Back"
@@ -440,7 +444,8 @@ var styles = StyleSheet.create ({
         marginRight: 10
     },
     rightContainer: {
-        flex: 1,
+        flexDirection: 'column',
+        flex: 0.8,
         padding: 5,
     },
     title: {
@@ -471,6 +476,11 @@ var styles = StyleSheet.create ({
     detail: {
         padding: 5,
         
+    },
+    iconText: {
+        flex: 1,
+        flexDirection: 'row',
+        padding: 5
     }
 });
 

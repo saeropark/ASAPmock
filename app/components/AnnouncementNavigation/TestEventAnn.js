@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  Button,
   PropTypes,
   Image,
   StyleSheet, 
@@ -15,6 +14,7 @@ import {
 } from 'react-native';
 import { StackNavigator, navigate } from 'react-navigation';
 import { TabNavigator } from "react-navigation";
+import {Icon, Button} from "react-native-elements";
 
 // import AnnouncementNav from './AnnouncementNav';
 // import AnnouncementList from '../../js/AnnouncementLists/AnnouncementList';
@@ -318,6 +318,7 @@ class EventDetail extends React.Component {
     
      render() {
         const {params} = this.props.navigation.state;
+        const {goBack} = this.props.navigation;
             console.log("Event info page");
             console.log(params);
 
@@ -326,8 +327,36 @@ class EventDetail extends React.Component {
             <View style={styles.container}>
                 <ScrollView>
                 <View style={styles.contentContainer}>
-                        <Text> Title?: {params.event.title}</Text>
+                        <Image
+                            style={{width: 300, height: 200}}
+                            source={{uri: params.event.fileURL}}
+                        />
                     </View>
+                 
+                        <Text style={styles.title}>{params.event.title}</Text>
+                        <View style={styles.descriptionContainer}>
+                            <View style={styles.iconColumn}>
+                                <Icon
+                                    name='today'/>
+                                <Icon
+                                    name='schedule'/>
+                                <Icon
+                                    name='place'/>
+                            </View>
+                            <View style={styles.rightContainer}>
+                                <Text style={styles.descriptionText}>  Date:{params.event.date}</Text>
+                                <Text style={styles.descriptionText}>  Time: {params.event.time}</Text>
+                                <Text style={styles.descriptionText}>  Location: {params.event.location}</Text>
+                                <Text style={styles.descriptionText}> {params. event.description}</Text>
+                            </View>
+                        
+                </View>
+                <Button
+                    color = "#FFFFFF"
+                    title ="Back"
+                    backgroundColor="#FFA500"
+                    onPress={() => goBack()} />
+
                 </ScrollView>
         </View>
         );

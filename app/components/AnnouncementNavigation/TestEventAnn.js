@@ -107,8 +107,8 @@ class EventList extends React.Component {
                         </View>
                    
                         <View style = {styles.rightContainer}>
-                             <View style={{backgroundColor: 'white', flex:0.2}}>
-                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                             <View style={{backgroundColor: (event.postType === 'Announcement')? '#ff8080':'#99ffbb',}}>
+                                <Text style={{color: '#000', textAlign: 'center'}}> {event.postType} </Text>
                             </View>
                             <Text style = {styles.title}> {event.title}</Text>
                             <Text style = {styles.detail} numberOfLines={1} >{event.description}</Text>
@@ -243,8 +243,8 @@ class PastList extends React.Component {
                         </View>
                    
                         <View style = {styles.rightContainer}>
-                            <View style={{backgroundColor: 'white', flex:0.2}}>
-                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                            <View style={{backgroundColor: (event.postType === 'Announcement')? '#ff8080':'#99ffbb',}}>
+                                <Text style={{color: '#000', textAlign: 'center'}}> {event.postType} </Text>
                             </View>
                             <Text style = {styles.title}> {event.title}</Text>
                             <Text style = {styles.detail} numberOfLines={1} >{event.description}</Text>
@@ -365,7 +365,7 @@ class EventDetail extends React.Component {
                 
                 <Button
                     color = "#FFFFFF"
-                    title ="Back"
+                    title ="Back to List"
                     backgroundColor="#FFA500"
                     onPress={() => goBack()} />
 

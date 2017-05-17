@@ -6,7 +6,7 @@ import {
     Text,
     ScrollView,
     ListView,
-    TouchableHighlight
+    TouchableOpacity, Linking
 } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
@@ -102,6 +102,8 @@ class ListCollapseView extends React.Component {
     this.setState({ activeSection: section });
   }
 
+  
+
   _renderHeader(section, i, isActive) {
     return (
       <Animatable.View duration={400} style={[styles.header, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
@@ -115,13 +117,17 @@ class ListCollapseView extends React.Component {
     return (
       <Animatable.View duration={400}  style={[styles.content, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
         <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>Operating Hours: {section.hour}</Animatable.Text>
-        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>Website: {section.site}</Animatable.Text>
+         <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>Website: {section.site}</Animatable.Text>
       </Animatable.View>
     );
   }
+  handleClick(url) {
+      //  var myurl = url.site;
+      //  console.log("URL: "+ myurl);
+      Linking.openURL(url);
+    }
 
-  _
-
+   
   render() {
     return (
       <View style={styles.dContainer}>

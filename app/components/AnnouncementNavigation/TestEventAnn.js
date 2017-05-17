@@ -126,19 +126,19 @@ class EventList extends React.Component {
     }
 
     /* to filter JSON data by making the name unique */
-    removeDuplicates(obj){
-        var array = obj;
-        var seenObj = {};
-        array = array.filter(function(currentObject) {
-            if (currentObject.name in seenObj) {
-                return false;
-            } else {
-                seenObj[currentObject.name] = true;
-                return true;
-            }
-        });
-        return array;
-    }
+    // removeDuplicates(obj){
+    //     var array = obj;
+    //     var seenObj = {};
+    //     array = array.filter(function(currentObject) {
+    //         if (currentObject.name in seenObj) {
+    //             return false;
+    //         } else {
+    //             seenObj[currentObject.name] = true;
+    //             return true;
+    //         }
+    //     });
+    //     return array;
+    // }
 
     // Sort announcements and events based on upcoming
     sortObjects(obj){

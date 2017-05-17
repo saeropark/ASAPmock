@@ -102,13 +102,16 @@ class EventList extends React.Component {
                                 <Text style={{color:'white', textAlign:'center'}}> {event.date} </Text>
                             </View>
                             <View style={{backgroundColor: 'white', flex:0.2}}>
-                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                                <Text style={{color: '#b51d03', textAlign: 'center'}}> Month! </Text>
                             </View>
                         </View>
                    
                         <View style = {styles.rightContainer}>
+                             <View style={{backgroundColor: 'white', flex:0.2}}>
+                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                            </View>
                             <Text style = {styles.title}> {event.title}</Text>
-                            <Text style = {styles.detail}>{event.description}</Text>
+                            <Text style = {styles.detail} numberOfLines={1} >{event.description}</Text>
                         </View>
                     </View>
                     <View style = {styles.separator}/>
@@ -223,6 +226,8 @@ class PastList extends React.Component {
 
 
     renderEvent(event) {
+
+        console.log("PostType:" + event.postType);
         return (
            <TouchableHighlight 
                 onPress={() => this.testOnPress(event)}>
@@ -233,13 +238,16 @@ class PastList extends React.Component {
                                 <Text style={{color:'white', textAlign:'center'}}> {event.date} </Text>
                             </View>
                             <View style={{backgroundColor: 'white', flex:0.2}}>
-                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                                <Text style={{color: '#b51d03', textAlign: 'center'}}> MONTH!</Text>
                             </View>
                         </View>
                    
                         <View style = {styles.rightContainer}>
+                            <View style={{backgroundColor: 'white', flex:0.2}}>
+                                <Text style={{color: '#b51d03', textAlign: 'center'}}> {event.postType} </Text>
+                            </View>
                             <Text style = {styles.title}> {event.title}</Text>
-                            <Text style = {styles.detail}>{event.description}</Text>
+                            <Text style = {styles.detail} numberOfLines={1} >{event.description}</Text>
                         </View>
                     </View>
                     <View style = {styles.separator}/>
@@ -332,7 +340,7 @@ class EventDetail extends React.Component {
                             source={{uri: params.event.fileURL}}
                         />
                     </View>
-                 
+                        
                         <Text style={styles.title}>{params.event.title}</Text>
                         <View style={styles.descriptionContainer}>
                             <View style={styles.iconColumn}>
@@ -462,6 +470,7 @@ var styles = StyleSheet.create ({
     },
     detail: {
         padding: 5,
+        
     }
 });
 

@@ -492,7 +492,16 @@ const EventTab = TabNavigator({
     Past: { screen: PastStack },
 },
     { initialRoute: 'Upcoming',
-        mode: 'modal' } // this is needed to make sure header is hidden on ios
+        mode: 'modal',  // this is needed to make sure header is hidden on ios
+        tabBarOptions: {
+        activeTintColor: 'white',
+        inactiveTintColor: 'lightgray',
+
+          style: {
+          backgroundColor: '#b510d3',
+        },
+      },
+    }
 );
 
 const EventStack = StackNavigator({

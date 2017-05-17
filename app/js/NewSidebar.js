@@ -48,7 +48,7 @@ class MyHomeScreen extends React.Component {
           source={require('../../img/avia1.jpg')}
           style={styles.imgContainer}>
           
-         <View style={{padding: 80, backgroundColor: 'rgba(52, 52, 52, 0.6)'}}>
+         <View style={{paddingHorizontal: 80, paddingBottom:40, backgroundColor: 'rgba(52, 52, 52, 0.6)', top: 200,}}>
           <Text style={styles.welcome}>
             What would you like to do?
           </Text>

@@ -29,6 +29,7 @@ import MapView from 'react-native-maps';
 import {Button, Icon} from 'react-native-elements';
 
 var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
+var FIREBASE_REQUEST_URL = 'https://asap-c4472.firebaseio.com/BusRoutes.json';
 var CONTENT = [];
 
 var {height, width} = Dimensions.get('window');
@@ -153,9 +154,9 @@ class AMList extends React.Component {
 
     // }
 
-    showShuttleBusInfo(bus) {
+    showShuttleBusInfo(busData) {
        console.log("TestonPress");
-        this.props.navigation.navigate('Info', {bus});
+        this.props.navigation.navigate('Info', {busData});
    }
     /* to filter JSON data by making the name unique */
     removeDuplicates(obj){
@@ -216,7 +217,7 @@ class PMList extends React.Component {
         .then((response) => response.json())
         .then((responseData) => {
             responseData = this.removeDuplicates(responseData);
-            responseData = this.displayAm(responseData);
+            responseData = this.displayPm(responseData);
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
                 //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
@@ -272,9 +273,9 @@ class PMList extends React.Component {
 
     // }
 
-    showShuttleBusInfo(bus) {
+    showShuttleBusInfo(busData) {
        console.log("TestonPress");
-        this.props.navigation.navigate('Info', {bus});
+        this.props.navigation.navigate('Info', {busData});
    }
     /* to filter JSON data by making the name unique */
     removeDuplicates(obj){
@@ -336,7 +337,7 @@ class LunchList extends React.Component {
         .then((response) => response.json())
         .then((responseData) => {
             responseData = this.removeDuplicates(responseData);
-            responseData = this.displayAm(responseData);
+            responseData = this.displayLunchR(responseData);
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
                 //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
@@ -387,9 +388,9 @@ class LunchList extends React.Component {
             
         );
     }
-    showShuttleBusInfo(bus) {
+    showShuttleBusInfo(busData) {
        console.log("TestonPress");
-        this.props.navigation.navigate('Info', {bus});
+        this.props.navigation.navigate('Info', {busData});
    }
     /* to filter JSON data by making the name unique */
     removeDuplicates(obj){
@@ -431,8 +432,11 @@ class RouteDetail extends React.Component {
     super(props);
     console.log("constructor(props)");
     //bus = this.props.busData;
+    //var buss = this.props.navigation.state.params;
 
+    
     this.state ={
+        
         visible: false,
         //bus: this.props.busData? this.props.busData: null,
         markers: [],
@@ -441,7 +445,7 @@ class RouteDetail extends React.Component {
         isLoading: false,
  
     }
-    console.log(bus);
+    //console.log(bus);
   }
 
   componentWillMount() {
@@ -459,7 +463,9 @@ class RouteDetail extends React.Component {
 
   //fetchData fetches data from URL and get bus stop details from beeline for markers
   async fetchData() {
-      fetch(this.requestURL(params.bus))
+      var passData = this.props.navigation.state.params.busData;
+      
+      fetch(this.requestURL(passData))
       .then((response) => response.json())
       .then((responseData) => {
           markersArray.length = 0;
@@ -478,7 +484,7 @@ class RouteDetail extends React.Component {
 
   //fetchStops fetches data from URL and get bus stop timings from firebase
   fetchStops(){
-      fetch(REQUEST_URL)
+      fetch(FIREBASE_REQUEST_URL)
       .then((response) => response.json())
       .then((responseData) => {
           this.getBusStopTimings(responseData);
@@ -514,16 +520,17 @@ class RouteDetail extends React.Component {
     // }
        const {params} = this.props.navigation.state;
        const {goBack} = this.props.navigation;
+       console.log(this.props.navigation.state.params.busData);
         return (
             //fetch json data and display
             
             <View style={{flex:1}}>
               <ScrollView style={{flex:1, backgroundColor:'#ffffff'}}>
                   <View style={styles.timeSignage}>
-                  <Text> {name}</Text>
+                  <Text> {this.props.navigation.state.params.busData.name}</Text>
                   <View style={styles.rightContainer}>
                     <Text>Signage example:</Text>
-                    <Text style={styles.rectangle}>{params.bus.signages}</Text> 
+                    <Text style={styles.rectangle}>{this.props.navigation.state.params.busData.notes.signage}</Text> 
                   </View>
                 </View>
                 <View style={styles.detail_container}>
@@ -589,7 +596,7 @@ class RouteDetail extends React.Component {
 
         for (var i=0; i<keys.length; i++){
             var key = keys[i];
-            if(obj[key].routeId = bus.id){
+            if(obj[key].routeId = this.props.navigation.state.params.busData.id){
                 console.log("FOUND! Key: " + key);
                 routeKey = key;
                 i = keys.length;
@@ -664,7 +671,7 @@ class RouteDetail extends React.Component {
   //display list of features
   goImptNotes() {
       
-    features = bus.features;
+    features = this.props.navigation.state.params.busData.features;
     Alert.alert("Important Notes", features);
   }
 }
@@ -723,17 +730,52 @@ class TimingCollapse extends React.Component {
   
 
 
-const EachStack = StackNavigator ({
-  AList: {screen: AMList},
-  PList: {screen: PMList},
-  LList: {screen: LunchList},
-  Info: {screen: RouteDetail},
-});
+//----- NAVIGATION STACK --------///
+const AMStack = StackNavigator({
+    List: {screen: AMList},
+    Info: {screen: RouteDetail},
+    
+},
+ { initialRoute: 'List',
+     mode: 'modal' } // this is needed to make sure header is hidden on ios
+ );
+ AMStack.navigationOptions = {
+  header: null,
+
+};
+
+const PMStack = StackNavigator({
+    List: {screen: PMList},
+    Info: {screen: RouteDetail},
+    
+},
+ { initialRoute: 'List',
+     mode: 'modal' } // this is needed to make sure header is hidden on ios
+ );
+ PMStack.navigationOptions = {
+  header: null,
+
+};
+
+const LunchStack = StackNavigator({
+    List: {screen: LunchList},
+    Info: {screen: RouteDetail},
+    
+},
+ { initialRoute: 'List',
+     mode: 'modal' } // this is needed to make sure header is hidden on ios
+ );
+
+ LunchStack.navigationOptions = {
+  header: null,
+
+};
+
 
 const RouteTab = TabNavigator({
-  AMRoute: { screen: AMTab },
-  PMRoute: { screen: PMTab },
-  LunchRoute: { screen: LunchTab}
+  AM : { screen: AMStack },
+  PM : { screen: PMStack },
+  Lunch : { screen: LunchStack},
 },
     
     {

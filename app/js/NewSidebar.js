@@ -216,7 +216,13 @@ const HomeStack = StackNavigator({
     
     //Collapse: {screen: CollapseView},
 },
-
+    {
+        header: {
+            style: {
+                backgroundColor: '#b510d3',
+            }
+        }
+    }
 )
 
 /**

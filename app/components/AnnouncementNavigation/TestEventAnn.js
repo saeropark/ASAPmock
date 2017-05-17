@@ -99,16 +99,16 @@ class EventList extends React.Component {
                     <View style = {styles.container}>
                        <View style={styles.dateColumn}>
                             <View style={{backgroundColor: '#b510d3', flex:0.2}}>
-                                <Text style={{color:'white', textAlign:'center'}}> {event.date} </Text>
+                                <Text style={styles.calDate}> {event.date.split("/")[1]} </Text>
                             </View>
                             <View style={{backgroundColor: 'white', flex:0.2}}>
-                                <Text style={{color: '#b51d03', textAlign: 'center'}}> Month! </Text>
+                                <Text style={styles.calMonth}> { this.getMonth(event.date.split("/")[0]) } </Text>
                             </View>
                         </View>
                    
                         <View style = {styles.rightContainer}>
-                             <View style={{backgroundColor: (event.postType === 'Announcement')? '#ff8080':'#99ffbb',}}>
-                                <Text style={{color: '#000', textAlign: 'center'}}> {event.postType} </Text>
+                             <View style={{backgroundColor: (event.postType === 'Announcement')? '#ff8080':'#99ffbb',width: 100}}>
+                                <Text style = {styles.postType}> {event.postType} </Text>
                             </View>
                             <Text style = {styles.title}> {event.title}</Text>
                             <Text style = {styles.detail} numberOfLines={1} >{event.description}</Text>
@@ -171,7 +171,50 @@ class EventList extends React.Component {
             }
         }
 
+        upcoming = this.sortByDate(upcoming);
+
         return upcoming;
+    }
+
+    //Sort list based on date
+    sortByDate(obj){
+        console.log(obj);
+        var keys = Object.keys(obj);
+        for (var i = keys.length-1; i>=0; i--){
+            for (var j = 1; j<=i; j++) {
+                var aDate = new Date(obj[keys[j-1]].date);
+                var bDate = new Date(obj[keys[j]].date);
+                console.log(aDate);
+                console.log(bDate);
+                if (aDate > bDate){
+                    var temp = obj[keys[j-1]];
+                    obj[keys[j-1]] = obj[keys[j]];
+                    obj[keys[j]] = temp;
+                }
+            }
+        }
+
+        return obj;
+    }
+
+
+    //Translate month number to text
+    getMonth(month){
+        switch(month){
+            case "01": return "JAN";
+            case "02": return "FEB";
+            case "03": return "MARCH";
+            case "04": return "APRIL";
+            case "05": return "MAY";
+            case "06": return "JUNE";
+            case "07": return "JULY";
+            case "08": return "AUG";
+            case "09": return "SEP";
+            case "10": return "OCT";
+            case "11": return "NOV";
+            case "12": return "DEC";
+            default: return "MONTH";
+        }
     }
 } 
 
@@ -226,8 +269,6 @@ class PastList extends React.Component {
 
 
     renderEvent(event) {
-
-        console.log("PostType:" + event.postType);
         return (
            <TouchableHighlight 
                 onPress={() => this.testOnPress(event)}>
@@ -235,16 +276,16 @@ class PastList extends React.Component {
                     <View style = {styles.container}>
                        <View style={styles.dateColumn}>
                             <View style={{backgroundColor: '#b510d3', flex:0.2}}>
-                                <Text style={{color:'white', textAlign:'center'}}> {event.date} </Text>
+                                <Text style={styles.calDate}> {event.date.split("/")[1]} </Text>
                             </View>
                             <View style={{backgroundColor: 'white', flex:0.2}}>
-                                <Text style={{color: '#b51d03', textAlign: 'center'}}> MONTH!</Text>
+                                <Text style={styles.calMonth}> { this.getMonth(event.date.split("/")[0]) } </Text>
                             </View>
                         </View>
                    
                         <View style = {styles.rightContainer}>
-                            <View style={{backgroundColor: (event.postType === 'Announcement')? '#ff8080':'#99ffbb',}}>
-                                <Text style={{color: '#000', textAlign: 'center'}}> {event.postType} </Text>
+                             <View style={{backgroundColor: (event.postType === 'Announcement')? '#ff8080':'#99ffbb',width: 100}}>
+                                <Text style = {styles.postType}> {event.postType} </Text>
                             </View>
                             <Text style = {styles.title}> {event.title}</Text>
                             <Text style = {styles.detail} numberOfLines={1} >{event.description}</Text>
@@ -307,7 +348,49 @@ class PastList extends React.Component {
             }
         }
 
+        upcoming = this.sortByDate(upcoming);
+
         return upcoming;
+    }
+
+    //Sort list based on date
+    sortByDate(obj){
+        console.log(obj);
+        var keys = Object.keys(obj);
+        for (var i = keys.length-1; i>=0; i--){
+            for (var j = 1; j<=i; j++) {
+                var aDate = new Date(obj[keys[j-1]].date);
+                var bDate = new Date(obj[keys[j]].date);
+                console.log(aDate);
+                console.log(bDate);
+                if (aDate > bDate){
+                    var temp = obj[keys[j-1]];
+                    obj[keys[j-1]] = obj[keys[j]];
+                    obj[keys[j]] = temp;
+                }
+            }
+        }
+
+        return obj;
+    }
+
+    //Translate month number to text
+    getMonth(month){
+        switch(month){
+            case "01": return "JAN";
+            case "02": return "FEB";
+            case "03": return "MARCH";
+            case "04": return "APRIL";
+            case "05": return "MAY";
+            case "06": return "JUNE";
+            case "07": return "JULY";
+            case "08": return "AUG";
+            case "09": return "SEP";
+            case "10": return "OCT";
+            case "11": return "NOV";
+            case "12": return "DEC";
+            default: return "MONTH";
+        }
     }
 } 
 
@@ -337,7 +420,7 @@ class EventDetail extends React.Component {
                 <View style={styles.contentContainer}>
                         <Image
                             style={{width: 300, height: 200}}
-                            source={{uri: params.event.fileURL}}
+                            source={{uri: (params.event.fileURL === "")? '../../img/SAP.png' : params.event.fileURL}}
                         />
                     </View>
                         
@@ -471,7 +554,7 @@ var styles = StyleSheet.create ({
     dateColumn: {
         flexDirection: 'column',
         flex: 0.2,
-        height: 50,
+        height: 70,
     },
     detail: {
         padding: 5,
@@ -481,6 +564,21 @@ var styles = StyleSheet.create ({
         flex: 1,
         flexDirection: 'row',
         padding: 5
+    },
+    postType: {
+        fontSize: 14,
+        width: 100,
+        textAlign: 'center'
+    },
+    calDate: {
+        color:'white', 
+        textAlign:'center',
+        fontSize: 24
+    },
+    calMonth: {
+        color: '#b51d03', 
+        textAlign: 'center',
+        fontSize: 14
     }
 });
 

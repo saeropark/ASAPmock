@@ -24,18 +24,19 @@ import TestCollapse from './SidebarList/TestCollapse';
 //======== SCREEN ON LOAD ===========
 class MyHomeScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
-      title: 'Seletar Aerospace Park',
-      drawerLabel: 'Home',
-       headerLeft: (
-           <View style={{padding:10}}>
-        <Icon
-        onPress={() => navigation.navigate('DrawerOpen')}
-        name='menu'
-        //type='ionicon'
-        color='black'
-        />
+
+    title: 'Seletar Aerospace Park',
+    drawerLabel: 'Home',
+    headerLeft: (
+        <View style={{padding:10}}>
+            <Icon
+                onPress={() => navigation.navigate('DrawerOpen')}
+                name='menu'
+                //type='ionicon'
+                color='black'
+            />
         </View>
-      )
+    )
   });
 
   render() {

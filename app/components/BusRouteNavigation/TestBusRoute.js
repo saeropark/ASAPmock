@@ -526,7 +526,7 @@ class RouteDetail extends React.Component {
                     <Text style={styles.rectangle}>{params.bus.signages}</Text> 
                   </View>
                 </View>
-                <View style={styles.container}>
+                <View style={styles.detail_container}>
                 <MapView style={styles.map} initialRegion={{
                     latitude: 1.357857, 
                     longitude: 103.828568,
@@ -812,5 +812,148 @@ var styles = StyleSheet.create ({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
+  },
+//--
+
+
+    timingHeader: {
+        fontSize: 20,
+        color: '#b510d3',
+        padding: 10,
+    },
+    contentContainer: {
+       flex:1,
+        marginTop: 75,
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
+    },
+    features: {
+        padding: 10,
+        fontSize: 15,
+        color: '#656565'
+    },
+    separator: {
+       borderRightWidth: 1,
+       borderColor: '#dddddd',
+       
+   },
+   rectangle: {
+       height: 50,
+       width: 50* 2,
+       backgroundColor: 'white',
+       borderColor: 'black',
+       justifyContent: 'center',
+       alignItems: 'center'
+   },
+   bigRect: {
+       height: 200,
+       width: 200*2,
+       backgroundColor: 'white',
+       borderColor: 'black',
+       justifyContent: 'center',
+       alignItems: 'center'
+   },
+
+   detail_container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+    },
+    image: {
+        width: 107,
+        height: 165,
+        padding: 10
+    },
+    description: {
+        padding: 10,
+        fontSize: 15,
+        color: '#656565'
+    },
+    iconStyle: {
+        textAlign: 'center',
+        padding: 14,
+        width: 50,
+        color: 'white'
+    },
+    navText: {
+        marginTop: -40,
+        paddingLeft: 50,
+        fontSize: 20,
+        color: 'white'
+    },
+    timeSignage: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#Ffcc00',
+        padding: 10
+    }, 
+    rightContainer: {
+        flex: 0.3
+    },
+    listButton: {
+        flex:1,
+    },
+    buttonText: {
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    map: {
+      width: width,
+      height: height/2.5
+   },
+   centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+
+  //------- Dropdowwn stylng -------//
+  dContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: '300',
+    marginBottom: 20,
+  },
+  header: {
+    backgroundColor: '#F5FCFF',
+    padding: 10,
+  },
+  headerText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  content: {
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  active: {
+    backgroundColor: 'rgba(255,255,255,1)',
+  },
+  inactive: {
+    backgroundColor: 'rgba(245,252,255,1)',
+  },
+  selectors: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  selector: {
+    backgroundColor: '#F5FCFF',
+    padding: 10,
+  },
+  activeSelector: {
+    fontWeight: 'bold',
+  },
+  selectTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    padding: 10,
   },
 });

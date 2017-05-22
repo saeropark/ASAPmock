@@ -11,6 +11,12 @@ import {
 import Communications from 'react-native-communications';
 import {Button} from 'react-native-elements';
 
+/**
+ * This functionality will allow users to select email based on 
+ * - SAP FEEDBACK
+ * - JTC GENERAL ENQUIRIES. 
+ * It will ask the user to open their own email app.
+ */
 export default class SendFeedback extends Component {
     //--- EMAIL PARAMETERS: ---//
     /**

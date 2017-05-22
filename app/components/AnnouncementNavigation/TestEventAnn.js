@@ -442,7 +442,7 @@ class EventDetail extends React.Component {
                                     name='place'/>
                                 <Text style={styles.descriptionText}> {params.event.location}</Text>
                             </View>
-                                <Text style={styles.descriptionText}> {params. event.description}</Text>
+                                <Text style={styles.description}> {params. event.description}</Text>
                             </View>
                     
                 
@@ -496,6 +496,9 @@ const EventTab = TabNavigator({
         tabBarOptions: {
         activeTintColor: 'white',
         inactiveTintColor: 'lightgray',
+        labelStyle: {
+            fontSize:16,
+        },
 
           style: {
           backgroundColor: '#b510d3',
@@ -588,6 +591,10 @@ var styles = StyleSheet.create ({
         color: '#b51d03', 
         textAlign: 'center',
         fontSize: 14
+    },
+    description: {
+        padding: 10,
+        paddingBottom: 50,
     }
 });
 

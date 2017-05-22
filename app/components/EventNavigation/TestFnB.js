@@ -186,7 +186,7 @@ class PromoDetail extends React.Component {
                                     name='place'/>
                                 <Text style={styles.descriptionText}> {params.event.location}</Text>
                             </View>
-                                <Text style={styles.descriptionText}> {params. event.description}</Text>
+                                <Text style={styles.description}> {params. event.description}</Text>
                             </View>
                     
                 
@@ -212,7 +212,20 @@ const FoodTab = TabNavigator({
   Directory: { screen: DirectoryTab },
   Promotion: { screen: PromoStack}
 },
-    { mode: 'modal' } // this is needed to make sure header is hidden on ios
+    { mode: 'modal', // this is needed to make sure header is hidden on ios
+        tabBarOptions: {
+        activeTintColor: 'white',
+        inactiveTintColor: 'lightgray',
+        labelStyle: {
+            fontSize:16,
+        },
+
+          style: {
+          backgroundColor: '#b510d3',
+        },
+      } 
+    
+    } 
 
 );
 
@@ -222,6 +235,7 @@ const FoodStack = StackNavigator({
 
 FoodTab.navigationOptions = ({navigation})=> ({
   header: null,
+  
   style: {
     backgroundColor: '#b510d3',
   }, 
@@ -235,7 +249,7 @@ var styles = StyleSheet.create ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#ffffff',
         padding: 10
     },
     thumbnail: {
@@ -261,7 +275,7 @@ var styles = StyleSheet.create ({
         backgroundColor: '#dddddd'
     },
     listView: {
-        backgroundColor: '#F5FCFF'
+        backgroundColor: '#ffffff'
     },
     loading: {
         flex: 1,
@@ -281,5 +295,8 @@ var styles = StyleSheet.create ({
         flex: 1,
         flexDirection: 'row',
         padding: 5
+    },
+    description: {
+        padding: 10,
     }
 });

@@ -116,8 +116,8 @@ class ListCollapseView extends React.Component {
   _renderContent(section, i, isActive) {
     return (
       <Animatable.View duration={400}  style={[styles.content, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
-        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>Operating Hours: {section.hour}</Animatable.Text>
-         <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>Website: {section.site}</Animatable.Text>
+        <Text>Operating Hours: {section.hour}</Text>
+         <TouchableOpacity onPress={()=> this.handleClick(section.site)}><Text>{section.site}</Text></TouchableOpacity>
       </Animatable.View>
     );
   }
@@ -136,7 +136,7 @@ class ListCollapseView extends React.Component {
           activeSection={this.state.activeSection}
           sections={DIR_LIST}
           renderHeader={this._renderHeader}
-          renderContent={this._renderContent}
+          renderContent={this._renderContent.bind(this)}
           duration={400}
           onChange={this._setSection.bind(this)}
         />

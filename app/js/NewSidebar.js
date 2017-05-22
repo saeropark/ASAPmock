@@ -16,6 +16,7 @@ import AboutJTC from './SidebarList/AboutJTC';
 import TenantDirectory from './SidebarList/TenantDirectory';
 import SAPMap from './SidebarList/SAPMap';
 import TestDir from './AnnouncementLists/TestDir';
+import SendFeedback from './SidebarList/SendFeedback';
 
 import FoodStack from '../components/EventNavigation/TestFnB';
 import EventStack from '../components/AnnouncementNavigation/TestEventAnn';
@@ -28,6 +29,8 @@ class MyHomeScreen extends React.Component {
 
     title: 'Seletar Aerospace Park',
     drawerLabel: 'Home',
+    headerStyle: {
+    },
     headerLeft: (
         <View style={{padding:10}}>
             <Icon
@@ -153,8 +156,12 @@ class MapSAP extends React.Component {
 class ShuttleBus extends React.Component {
   static navigationOptions = ({navigation}) => ({
        
-        title: 'Shuttle Bus service',
-        drawerLabel: 'Shuttle Bus'
+        title: 'Shuttle Bus Service',
+        drawerLabel: 'Shuttle Bus',
+        headerStyle: {
+            elevation: 0,
+        },
+
     });
     render() {
         const { params } = this.props.navigation.state;
@@ -198,6 +205,16 @@ class CollapseView extends React.Component {
     }
 }
 
+class Feedback extends React.Component {
+    static navigationOptions = ({navigation}) => ({
+        title: 'Send Feedback',
+        drawerLabel: 'Email Feedback'
+    })
+    render() {
+        return <SendFeedback />
+    }
+}
+
 
 /**
  * StackNavigator is like a collection to compile the different screens.\.
@@ -213,14 +230,12 @@ const HomeStack = StackNavigator({
     AboutJTC: {screen: About},
     Tenant: {screen: Tenant},
     SAPMap: {screen: MapSAP},
-    
+    Feedback: {screen: Feedback},    
     //Collapse: {screen: CollapseView},
 },
     {
-        header: {
-            style: {
-                backgroundColor: '#b510d3',
-            }
+        headerTitleStyle: {
+            color: '#b510d3'
         }
     }
 )
@@ -239,6 +254,7 @@ const SideBar = DrawerNavigator({
     Tenant: {screen: Tenant},
     SAPMap: {screen: MapSAP},
     ContactUs: {screen: Contact},
+    Feedback: {screen: Feedback},
    // Collapse: {screen: CollapseView},
  }, 
 
@@ -252,7 +268,9 @@ const SideBar = DrawerNavigator({
 );
 
 HomeStack.navigationOptions = {
-  
+    headerStyle: {
+        backgroundColor: '#ff6666'
+    }
 }
 export default SideBar;
 

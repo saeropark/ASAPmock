@@ -42,7 +42,10 @@ var obj;
 
 class AMTab extends React.Component {
     static navigationOptions = {
-        tabBarLabel: 'AM'
+        tabBarLabel: 'AM',
+        labelStyle: {
+            fontSize:16,
+        },
     }
   render() {
     return <AMList/>
@@ -51,7 +54,10 @@ class AMTab extends React.Component {
 
 class PMTab extends React.Component {
     static navigationOptions = {
-        tabBarLabel: 'PM'
+        tabBarLabel: 'PM',
+        labelStyle: {
+            fontSize:16,
+        },
     }
   render() {
     return <PMList/>
@@ -60,7 +66,10 @@ class PMTab extends React.Component {
 
 class LunchTab extends React.Component {
     static navigationOptions = {
-        tabBarLabel: 'LUNCH'
+        tabBarLabel: 'LUNCH',
+        labelStyle: {
+            fontSize:16,
+        },
     }
     render(){
         return <LunchList/>
@@ -138,7 +147,7 @@ class AMList extends React.Component {
                             <Text style={styles.centering}>{bus.label}</Text>
                         </View>
                         <View style = {styles.rightContainer}>
-                            <Text style = {styles.title}>{bus.name}</Text>
+                            <Text style = {styles.lvTitle}>{bus.name}</Text>
                             <Text style = {styles.detail}>{bus.label}</Text>
                             <Text style = {styles.detail}>{bus.schedule}</Text>
                         </View>
@@ -257,7 +266,7 @@ class PMList extends React.Component {
                             <Text style={styles.centering}>{bus.label}</Text>
                         </View>
                         <View style = {styles.rightContainer}>
-                            <Text style = {styles.title}>{bus.name}</Text>
+                            <Text style = {styles.lvTitle}>{bus.name}</Text>
                             <Text style = {styles.detail}>{bus.label}</Text>
                             <Text style = {styles.detail}>{bus.schedule}</Text>
                         </View>
@@ -372,12 +381,12 @@ class LunchList extends React.Component {
                          <Icon
                             reverse
                             name='directions-bus'
-                            color= '#b510d3'//color='#517fa4'
+                            color= '#ff6666'//color='#517fa4'
                             />
                             <Text style={styles.centering}>{bus.label}</Text>
                         </View>
                         <View style = {styles.rightContainer}>
-                            <Text style = {styles.title}>{bus.name}</Text>
+                            <Text style = {styles.lvTitle}>{bus.name}</Text>
                             <Text style = {styles.detail}>{bus.label}</Text>
                             <Text style = {styles.detail}>{bus.schedule}</Text>
                         </View>
@@ -432,7 +441,7 @@ class RouteDetail extends React.Component {
     super(props);
     console.log("constructor(props)");
     //bus = this.props.busData;
-    //var buss = this.props.navigation.state.params;
+    //var passData = this.props.navigation.state.params.busData;
 
     
     this.state ={
@@ -451,11 +460,11 @@ class RouteDetail extends React.Component {
   componentWillMount() {
     console.log("componentWillMount()");
     this.setState({ showLoading: true ,  });
-    setInterval(() => {
-            this.setState({
-                visible: !this.state.visible
-            });
-        }, 3000);
+    // setInterval(() => {
+    //         this.setState({
+    //             visible: !this.state.visible
+    //         });
+    //     }, 3000);
     this.fetchStops();
     this.fetchData().done();
     
@@ -519,7 +528,8 @@ class RouteDetail extends React.Component {
     //   this.renderLoadingView();
     // }
        const {params} = this.props.navigation.state;
-       const {goBack} = this.props.navigation;
+       const {goBack} = this.props.navigation
+       ;
        console.log(this.props.navigation.state.params.busData);
         return (
             //fetch json data and display
@@ -527,7 +537,7 @@ class RouteDetail extends React.Component {
             <View style={{flex:1}}>
               <ScrollView style={{flex:1, backgroundColor:'#ffffff'}}>
                   <View style={styles.timeSignage}>
-                  <Text> {this.props.navigation.state.params.busData.name}</Text>
+                  <Text> {params.busData.name}</Text>
                   <View style={styles.rightContainer}>
                     <Text>Signage example:</Text>
                     <Text style={styles.rectangle}>{this.props.navigation.state.params.busData.notes.signage}</Text> 
@@ -569,16 +579,11 @@ class RouteDetail extends React.Component {
                     backgroundColor = '#ffffff' 
                     onPress={this.goImptNotes.bind(this)}/>
 
-                  {/*<Button 
-                    raised
-                    title = "Display List of Stops"
-                    backgroundColor = '#FFA500'
-                    onPress={this.goDisplayList.bind(this)} />*/}
                     <Button
                     color = "#FFFFFF"
-                    title ="Back"
+                    title ="Back to List"
                     backgroundColor="#FFA500"
-                    onPress={() => goBack()}/>
+                    onPress={() => goBack()} />
                     
                   
                 </View>
@@ -703,7 +708,7 @@ class TimingCollapse extends React.Component {
   _renderContent(section, i, isActive) {
     return (
       <Animatable.View duration={400}  style={[styles.content, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
-        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>{section.content}</Animatable.Text>
+        <Text>{section.content}</Text>
       </Animatable.View>
     );
   }
@@ -783,9 +788,13 @@ const RouteTab = TabNavigator({
         tabBarOptions: {
         activeTintColor: 'white',
         inactiveTintColor: 'lightgray',
+        labelStyle: {
+            fontSize:16,
+        },
 
           style: {
           backgroundColor: '#b510d3',
+          
         },
       } 
     } 
@@ -821,6 +830,11 @@ var styles = StyleSheet.create ({
     rightContainer: {
         flex: 1
     },
+    lvTitle:{
+      fontSize: 18,
+      color: '#b510d3',
+      marginBottom: 8,
+    },
     title: {
         fontSize: 20,
         marginBottom: 8
@@ -833,7 +847,7 @@ var styles = StyleSheet.create ({
         backgroundColor: '#dddddd'
     },
     listView: {
-        backgroundColor: '#f5fcff' 
+        backgroundColor: '#ffffff' 
     },
     loading: {
         flex: 1,
@@ -953,7 +967,6 @@ var styles = StyleSheet.create ({
   //------- Dropdowwn stylng -------//
   dContainer: {
     flex: 1,
-    justifyContent: 'center',
     backgroundColor: '#F5FCFF',
   },
   title: {
@@ -967,7 +980,6 @@ var styles = StyleSheet.create ({
     padding: 10,
   },
   headerText: {
-    textAlign: 'center',
     fontSize: 16,
     fontWeight: '500',
   },

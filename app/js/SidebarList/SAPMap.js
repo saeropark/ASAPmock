@@ -53,7 +53,7 @@ export default class SAPMap extends Component {
                  <PhotoView
                     source={{uri: type.url}}
                     minimumZoomScale={1}
-                    maximumZoomScale={3}
+                    maximumZoomScale={10}
                     onLoad={() => console.log("Image loaded!")}
                     style={{flex: 1, width: undefined, height: undefined }} />
             </View>

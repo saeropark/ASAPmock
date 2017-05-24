@@ -700,7 +700,16 @@ class TimingCollapse extends React.Component {
   _renderHeader(section, i, isActive) {
     return (
       <Animatable.View duration={400} style={[styles.header, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
-        <Text style={styles.headerText}>{section.title}</Text>
+      <View style={styles.container}>
+        <Icon
+            name='keyboard-arrow-down'
+            color= '#000'//color='#517fa4'
+            />
+            <View style={styles.rightContainer}>
+                <Text style={styles.headerText}>{section.title}</Text>
+            </View>
+        </View>
+        <View style = {styles.separator}/>
       </Animatable.View>
     );
   }
@@ -718,7 +727,6 @@ class TimingCollapse extends React.Component {
   render() {
     return (
       <View style={styles.dContainer}>
-          <Text> List of Stops </Text>
         <Accordion
           activeSection={this.state.activeSection}
           sections={CONTENT}
@@ -844,7 +852,7 @@ var styles = StyleSheet.create ({
     },
     separator: {
         height: 1,
-        backgroundColor: '#dddddd'
+        backgroundColor: '#dddddd',
     },
     listView: {
         backgroundColor: '#ffffff' 
@@ -888,11 +896,6 @@ var styles = StyleSheet.create ({
         fontSize: 15,
         color: '#656565'
     },
-    separator: {
-       borderRightWidth: 1,
-       borderColor: '#dddddd',
-       
-   },
    rectangle: {
        height: 50,
        width: 50* 2,
@@ -944,9 +947,6 @@ var styles = StyleSheet.create ({
         backgroundColor: '#Ffcc00',
         padding: 10
     }, 
-    rightContainer: {
-        flex: 0.3
-    },
     listButton: {
         flex:1,
     },
@@ -958,18 +958,13 @@ var styles = StyleSheet.create ({
       width: width,
       height: height/2.5
    },
-   centering: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 8,
-  },
 
   //------- Dropdowwn stylng -------//
   dContainer: {
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  title: {
+  dtitle: {
     textAlign: 'center',
     fontSize: 22,
     fontWeight: '300',
@@ -982,6 +977,7 @@ var styles = StyleSheet.create ({
   headerText: {
     fontSize: 16,
     fontWeight: '500',
+    paddingBottom: 10,
   },
   content: {
     padding: 20,
@@ -991,7 +987,7 @@ var styles = StyleSheet.create ({
     backgroundColor: 'rgba(255,255,255,1)',
   },
   inactive: {
-    backgroundColor: 'rgba(245,252,255,1)',
+    backgroundColor: 'rgba(255,255,255,1)', //(245,252,255)
   },
   selectors: {
     marginBottom: 10,

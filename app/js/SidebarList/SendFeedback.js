@@ -32,15 +32,17 @@ export default class SendFeedback extends Component {
             <View style={styles.container}>
             <Text style={styles.welcome}> Let us know your feedback!</Text>
             <Button
+                    style={{width: undefined}}
                     color = "#FFFFFF"
                     title ="Send an email feedback"
                     backgroundColor="#FFA500"
-                    onPress={() => Communications.email(['jtc.saeropark@gmail.com'],null,null,'SAP App Feedback', 'Please leave your name and contact details behind.')}/>
+                    onPress={() => Communications.email(['jtc.saeropark@gmail.com'],null,null,'SAP App Feedback', '#Please leave your name and contact details behind.#')}/>
             <Button
+            style={{width: undefined}}
             color = "#FFFFFF"
             title ="General Enquiries"
             backgroundColor="#FFA500"
-            onPress={() => Communications.email(['askjtc@jtc.gov.sg'],null,null,'JTC General Enquiries','Please leave your name and contact details behind.')}/>
+            onPress={() => Communications.email(['askjtc@jtc.gov.sg'],null,null,'JTC General Enquiries','#Please leave your name and contact details behind.#')}/>
           
             </View>
         );

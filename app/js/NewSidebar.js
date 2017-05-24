@@ -7,9 +7,13 @@ import {
   Image,
   StyleSheet, 
   Platform,
+  AlertIOS,
+  TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import { StackNavigator, DrawerNavigator} from 'react-navigation';
-import { Icon , Button} from 'react-native-elements'
+import { Icon , Button} from 'react-native-elements';
+import SlidingUpPanel from 'react-native-sliding-up-panel';
 
 import ContactUs from './SidebarList/ContactUs';
 import AboutJTC from './SidebarList/AboutJTC';
@@ -17,12 +21,19 @@ import TenantDirectory from './SidebarList/TenantDirectory';
 import SAPMap from './SidebarList/SAPMap';
 import TestDir from './AnnouncementLists/TestDir';
 import SendFeedback from './SidebarList/SendFeedback';
+import SomeComponent from './SidebarList/SomeFile';
 
 import FoodStack from '../components/EventNavigation/TestFnB';
 import EventStack from '../components/AnnouncementNavigation/TestEventAnn';
 import RouteStack from '../components/BusRouteNavigation/TestBusRoute';
 
 import TestCollapse from './SidebarList/TestCollapse';
+
+var deviceHeight = Dimensions.get('window').height;
+var deviceWidth = Dimensions.get('window').width;
+
+var MAXIMUM_HEIGHT = (deviceHeight - 100 )/2;
+var MINUMUM_HEIGHT = 50;
 //======== SCREEN ON LOAD ===========
 class MyHomeScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -43,63 +54,104 @@ class MyHomeScreen extends React.Component {
     )
   });
 
+
   render() {
     return (
+
+          
         <View style= {styles.container}>
         
          <Image
           source={require('../../img/avia1.jpg')}
           style={styles.imgContainer}>
-          
-         <View style={{paddingHorizontal: 80, paddingBottom:40, backgroundColor: 'rgba(52, 52, 52, 0.6)', top: 200,}}>
-          <Text style={styles.welcome}>
-            What would you like to do?
-          </Text>
-          <Text style={styles.instructions}>
-            Select one to begin
-          </Text>
-           <View style={styles.iconCon}>
-               <View style={styles.iconContainer}>
+          <View style={styles.parentContainer}>
+               
+                <SlidingUpPanel 
+                    ref={panel => { this.panel = panel; }}
+                    containerMaximumHeight={MAXIMUM_HEIGHT}
+                    handlerHeight={MINUMUM_HEIGHT}
+                    allowStayMiddle={false}
+                    handlerDefaultView={<HandlerOne/>}>
                 
-            <Icon
-                reverse
-                name='event'
-                //type='ionicon'
-                color='#ffcc00'
-                onPress={() => this.props.navigation.navigate('Announcement')}
-            />
-            <Text style={styles.instructions}>Events</Text>
+                    <View style={{ paddingBottom:40, backgroundColor: 'rgba(52, 52, 52, 0.6)',}}>
+                        <Text style={styles.welcome}>
+                            What would you like to do?
+                        </Text>
+                        <Text style={styles.instructions}>
+                            Select one to begin
+                        </Text>
+                        <View style={styles.iconCon}>
+                            <View style={styles.iconContainer}>
+                                
+                            <Icon
+                                reverse
+                                name='event'
+                                //type='ionicon'
+                                color='#ffcc00'
+                                onPress={() => this.props.navigation.navigate('Announcement')}
+                            />
+                            <Text style={styles.instructions}>Events</Text>
+                            </View>
+                            
+                            <View style = {styles.iconContainer}>
+                            
+                            <Icon
+                                reverse
+                                name='local-dining'
+                                //type='ionicon'
+                                color='red'
+                                onPress={() => this.props.navigation.navigate('Food')}
+                            />
+                            <Text style={styles.instructions}>F&B</Text>
+                            </View>
+                            <View style={styles.iconContainer}>
+                            <Icon
+                                reverse
+                                name='directions-bus'
+                                //type='ionicon'
+                                color= '#b510d3'//color='#517fa4'
+                                onPress={() => this.props.navigation.navigate('Bus')}
+                                />
+                                <Text style={styles.instructions}>Shuttle bus</Text>
+                            </View>
+                        </View>
+                        </View>
+               
+                </SlidingUpPanel>
             </View>
-            
-            <View style = {styles.iconContainer}>
-            
-            <Icon
-                reverse
-                name='local-dining'
-                //type='ionicon'
-                color='red'
-                onPress={() => this.props.navigation.navigate('Food')}
-            />
-            <Text style={styles.instructions}>F&B</Text>
-            </View>
-            <View style={styles.iconContainer}>
-            <Icon
-                reverse
-                name='directions-bus'
-                //type='ionicon'
-                color= '#b510d3'//color='#517fa4'
-                onPress={() => this.props.navigation.navigate('Bus')}
-                />
-                <Text style={styles.instructions}>Shuttle bus</Text>
-            </View>
-        </View>
-        </View>
+        
       </Image>
       </View>
     );
   }
-}
 
+
+};
+
+class HandlerOne extends Component{
+  render() {
+    return (
+
+        <View style={styles.textContainer}>
+          <Text style={styles.handlerText}>Slide to pull up</Text>    
+     </View>
+    );
+  }
+};
+
+/*class HandlerTwo extends Component {
+  render() {
+    return (
+      <TouchableHighlight style={styles.button} underlayColor='transparent' onPress={this.onPress}>
+        <Text style={styles.handlerText}>Tap me!</Text>
+      </TouchableHighlight>
+    );
+  }
+
+  onPress() {
+    AlertIOS.alert('Event Happened', 'You just tapped the button!', [{text: 'OK'}]);
+  }
+};*/
 
 //======== CLASS TO CALL CONTACT US PAGE ============
 class Contact extends React.Component {
@@ -215,7 +267,15 @@ class Feedback extends React.Component {
     }
 }
 
-
+class SomeFile extends React.Component {
+    static navigationOptions = ({navigation}) => ({
+        title: 'Gesture',
+        drawerLabel: 'Gesture'
+    })
+    render() {
+        return <SomeComponent />
+    }
+}
 /**
  * StackNavigator is like a collection to compile the different screens.\.
  * 
@@ -230,7 +290,8 @@ const HomeStack = StackNavigator({
     AboutJTC: {screen: About},
     Tenant: {screen: Tenant},
     SAPMap: {screen: MapSAP},
-    Feedback: {screen: Feedback},    
+    Feedback: {screen: Feedback},
+    Gesture: {screen: SomeFile}, 
     //Collapse: {screen: CollapseView},
 },
     {
@@ -255,6 +316,7 @@ const SideBar = DrawerNavigator({
     SAPMap: {screen: MapSAP},
     ContactUs: {screen: Contact},
     Feedback: {screen: Feedback},
+    Gesture: {screen: SomeFile}, 
    // Collapse: {screen: CollapseView},
  }, 
 
@@ -303,9 +365,9 @@ imgContainer: {
     flex:1,
     width: undefined,
     height: undefined,
-    backgroundColor:'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // backgroundColor:'transparent',
+    // justifyContent: 'center',
+    // alignItems: 'center',
 },
 iconCon: {
     flexDirection: 'row',
@@ -322,4 +384,45 @@ iconCon: {
     
     color: 'white'
   },
+
+  //----------- SLIDE UP PANEL  --------//
+   parentContainer: {
+    flex : 1,
+    paddingTop: 60,
+    elevation: 4,
+  },
+
+  backContainer: {
+    flex : 1,
+    backgroundColor : 'blue'
+  },
+
+  frontContainer: {
+    flex : 1,
+  },
+
+  logText: {
+    color : 'white',
+    fontWeight: '700',
+  },
+
+
+  image: {
+    height : MINUMUM_HEIGHT,
+    width: deviceWidth,
+    alignItems: 'center',
+    //backgroundColor : 'gray'
+  },
+
+  textContainer: {
+    height : MINUMUM_HEIGHT,
+    width: deviceWidth,
+  },
+
+  handlerText: {
+    color: 'black',
+    fontSize: 15,
+    fontWeight: '700',
+  },
+
 });

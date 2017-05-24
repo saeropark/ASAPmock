@@ -20,6 +20,8 @@
     "react-native-maps": "^0.13.1",
     "react-native-pdf-view": "git+https://github.com/cnjon/react-native-pdf-view.git",
     "react-native-photo-view": "^1.2.0",
+    "react-native-sliding-up-panel": "^1.1.12",
+    "react-native-swipe-gestures": "^1.0.2",
     "react-native-tab-view": "0.0.57",
     "react-native-vector-icons": "^4.0.0",
     "react-native-viewpager": "^0.2.13",

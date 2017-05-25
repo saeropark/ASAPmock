@@ -99,9 +99,9 @@ class AMList extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => {
+       // setInterval(() => {
             this.fetchData();
-        }, 3000);
+        //}, 3000);
     }
 
  
@@ -116,7 +116,7 @@ class AMList extends React.Component {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
                 //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
-                isLoading: false,
+                //isLoading: false,
                 visible: false,
             });
            //  }, 3000);
@@ -455,7 +455,7 @@ class RouteDetail extends React.Component {
     
     this.state ={
         
-        visible: false,
+        visible: true,
         //bus: this.props.busData? this.props.busData: null,
         markers: [],
         restoring: false,
@@ -475,7 +475,9 @@ class RouteDetail extends React.Component {
     //         });
     //     }, 3000);
     this.fetchStops();
+     //setInterval(() => {
     this.fetchData().done();
+   // }, 2000);
     
   }
 
@@ -494,7 +496,8 @@ class RouteDetail extends React.Component {
           console.log(markersArray);
             this.state.markers = markersArray;
           this.setState({ 
-              showLoading: false 
+              showLoading: false ,
+              visible: false,
             });
       })
       .done();
@@ -544,6 +547,7 @@ class RouteDetail extends React.Component {
             //fetch json data and display
             
             <View style={{flex:1}}>
+                <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
               <ScrollView style={{flex:1, backgroundColor:'#ffffff'}}>
                   <View style={styles.timeSignage}>
                   <Text> {params.busData.name}</Text>

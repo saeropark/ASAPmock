@@ -13,6 +13,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 var REQUEST_URL = 'https://asap-c4472.firebaseio.com/.json';
 var DIR_LIST =[];
@@ -22,6 +23,7 @@ export default class TestDir extends Component {
         super(props);
         this.state = {
             isLoading: true, 
+            visible: true,
             //dataSource is the interface
             dataSource: new ListView.DataSource({
             rowHasChanged: (row1, row2)=> row1 !== row2
@@ -43,7 +45,8 @@ export default class TestDir extends Component {
            this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData.Directory),
                 //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
-                isLoading: false
+                isLoading: false,
+                visible: false,
             });
         })
         .done();
@@ -184,6 +187,7 @@ class ListCollapseView extends React.Component {
         
     return (
       <View style={styles.dContainer}>
+         <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         <ScrollView>
           <Text>Filter by Cuisine type:</Text>
             <Picker

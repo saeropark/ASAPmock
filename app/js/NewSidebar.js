@@ -133,6 +133,7 @@ class MyHomeScreen extends React.Component {
 
 class HandlerOne extends Component{
   render() {
+      //<Text style={styles.handlerText}>Slide to pull up</Text> 
     return (
 
         <View style={styles.textContainer}>
@@ -140,7 +141,7 @@ class HandlerOne extends Component{
             name='keyboard-arrow-up'
             color= '#fff'//color='#517fa4'
             />
-          <Text style={styles.handlerText}>Slide to pull up</Text>    
+             
      </View>
     );
   }

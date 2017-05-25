@@ -144,18 +144,33 @@ class ListCollapseView extends React.Component {
       //  console.log("URL: "+ myurl);
       Linking.openURL(url);
     }
+  
+  sortOn(property){
+    return function(a, b){
+        if(a[property] < b[property]){
+            return -1;
+        }else if(a[property] > b[property]){
+            return 1;
+        }else{
+            return 0;   
+        }
+    }
+}
+
 
   filterDirectory(val){
-    if (val === "All"){
-      return DIR_LIST
-    }
     var array = [];
-    for(var i = 0; i < DIR_LIST.length; i++){
-      if (DIR_LIST[i].type === val){
-        array.push(DIR_LIST[i])
+    if (val === "All"){
+      array = DIR_LIST;
+    } else {
+      for(var i = 0; i < DIR_LIST.length; i++){
+        if (DIR_LIST[i].type === val){
+          array.push(DIR_LIST[i])
+        }
+        //array.sort(function(a,b) {return a.name - b.name});
       }
     }
-    //array = DIR_LIST;
+    array.sort(function(a,b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0);})
     return array;
   }
 

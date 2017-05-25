@@ -1,136 +1,48 @@
-'use strict';
-
 import React, { Component } from 'react';
-import SlidingUpPanel from 'react-native-sliding-up-panel';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View, 
-  AlertIOS,
-  TouchableHighlight,
-  Dimensions,
-  Image
-} from 'react-native';
+import { ActivityIndicator, StyleSheet, View,Alert
+ } from 'react-native';
 
-var deviceHeight = Dimensions.get('window').height;
-var deviceWidth = Dimensions.get('window').width;
+import Spinner from 'react-native-loading-spinner-overlay';
 
-var MAXIMUM_HEIGHT = deviceHeight - 100;
-var MINUMUM_HEIGHT = 80;
-
-export default class SomeComponent extends Component {
+export default class SomeComponent extends React.Component {
 
   constructor(props) {
-    super(props);
+    super();
     this.state = {
-      containerHeight : 0
-    }
+      visible: true
+    };
+  }
+
+  /* eslint react/no-did-mount-set-state: 0 */
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        visible: false
+      });
+    }, 3000);
+   
   }
 
   render() {
     return (
-      <View style={styles.parentContainer}>
-        <View style={styles.backContainer}>
-          <Text style={styles.logText}>Panel Height: {this.state.containerHeight}</Text>
-        </View>
-        <SlidingUpPanel 
-            ref={panel => { this.panel = panel; }}
-            containerMaximumHeight={MAXIMUM_HEIGHT}
-            containerBackgroundColor={'green'}
-            handlerHeight={MINUMUM_HEIGHT}
-            allowStayMiddle={true}
-            handlerDefaultView={<HandlerOne/>}
-            getContainerHeight={this.getContainerHeight}>
-          <View style={styles.frontContainer}>
-            <Text style={styles.panelText}>Hello guys!</Text>
-          </View>
-        </SlidingUpPanel>
+      <View style={{ flex: 1 }}>
+        <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
       </View>
-      )
-  }
-
-  getContainerHeight = (height) => {
-    this.setState({
-      containerHeight : height
-    });
-  }
-
-};
-
-class HandlerOne extends Component{
-  render() {
-    return (
-
-        <View style={styles.textContainer}>
-          <Text style={styles.handlerText}>Another Sample Text</Text>    
-     </View>
     );
   }
-};
-
-class HandlerTwo extends Component {
-  render() {
-    return (
-      <TouchableHighlight style={styles.button} underlayColor='transparent' onPress={this.onPress}>
-        <Text style={styles.handlerText}>Tap me!</Text>
-      </TouchableHighlight>
-    );
-  }
-
-  onPress() {
-    AlertIOS.alert('Event Happened', 'You just tapped the button!', [{text: 'OK'}]);
-  }
-};
-
-var styles = StyleSheet.create({
-  parentContainer: {
-    flex : 1,
-    paddingTop: 60
-  },
-
-  backContainer: {
-    flex : 1,
-    backgroundColor : 'blue'
-  },
-
-  frontContainer: {
-    flex : 1,
-  },
-
-  logText: {
-    color : 'white',
-    fontWeight: '700',
-  },
-
-  panelText: {
-    color : 'white',
-  },
-
-  image: {
-    height : MINUMUM_HEIGHT,
-    width: deviceWidth,
+}
+const styles = StyleSheet.create({
+  centering: {
     alignItems: 'center',
-    backgroundColor : 'gray'
+    justifyContent: 'center',
+    padding: 8,
   },
-
-  textContainer: {
-    backgroundColor : 'rgba(0,0,0, 0.5)',
-    height : MINUMUM_HEIGHT,
-    justifyContent : 'center'
+  gray: {
+    backgroundColor: '#cccccc',
   },
-
-  handlerText: {
-    color: 'white',
-    fontSize: 15,
-    fontWeight: '700',
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 8,
   },
-
-  button: {
-    backgroundColor : 'black',
-    justifyContent : 'center',
-    alignSelf : 'center',
-    padding: 5
-  }
-
 });

@@ -10,7 +10,8 @@ import {
   Alert,
   TouchableOpacity,
   Dimensions,
-  ScrollView,TouchableHighlight
+  ScrollView,TouchableHighlight,
+  ActivityIndicator
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { TabNavigator } from "react-navigation";
@@ -27,6 +28,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 
 import MapView from 'react-native-maps';
 import {Button, Icon} from 'react-native-elements';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 var REQUEST_URL = 'https://api.beeline.sg/routes/search_by_region?regionId=24&areaName=North-east%20Region';
 var FIREBASE_REQUEST_URL = 'https://asap-c4472.firebaseio.com/BusRoutes.json';
@@ -86,7 +88,7 @@ class AMList extends React.Component {
         super(props);
         
         this.state = {
-            visible: false,
+            visible: true,
             animating: true,
             isLoading: true, 
             //dataSource is the interface
@@ -97,10 +99,12 @@ class AMList extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchData();
-        
+        setInterval(() => {
+            this.fetchData();
+        }, 3000);
     }
 
+ 
     // --- calls Google API ---
     fetchData() {
         fetch(REQUEST_URL)
@@ -108,18 +112,23 @@ class AMList extends React.Component {
         .then((responseData) => {
             responseData = this.removeDuplicates(responseData);
             responseData = this.displayAm(responseData);
+           //setInterval(() => {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
                 //dataSource: this.state.dataSource.cloneWithRows(responseData["items"]),
-                isLoading: false
+                isLoading: false,
+                visible: false,
             });
+           //  }, 3000);
         })
         .done();
     }
     render() {
         return (
           <View style={styles.mainContainer}>
-            {/*<NavBar />*/}
+          
+                  <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+           
             <ListView
                 dataSource = {this.state.dataSource}
                 renderRow = {this.renderBus.bind(this)}

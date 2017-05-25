@@ -167,7 +167,6 @@ class ListCollapseView extends React.Component {
         if (DIR_LIST[i].type === val){
           array.push(DIR_LIST[i])
         }
-        //array.sort(function(a,b) {return a.name - b.name});
       }
     }
     array.sort(function(a,b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0);})

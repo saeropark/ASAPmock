@@ -6,7 +6,8 @@ import {
     Text,
     ScrollView,
     ListView,
-    TouchableOpacity, Linking
+    TouchableOpacity, Linking,
+    Picker
 } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
@@ -52,26 +53,37 @@ export default class TestDir extends Component {
     getList(obj){
         DIR_LIST.length=0;
         try{
-            var noOfDir = obj.length;   
-            for (var i=1; i<noOfDir+1; i++ ){
+            var noOfDir = obj.length;
+            console.log(noOfDir);
+            console.log(obj);   
+            for (var i=1; i<noOfDir; i++ ){
+              console.log(obj[i]);
                 var newName = obj[i].name; 
                 var newAddress = obj[i].address;
                 var newHours = obj[i].hours;
                 var newType = obj[i].type;
                 var newWebsite = obj[i].website;
+                var newZone = obj[i].zone;
+                
 
                 var newList = new Object();
                 newList.title = newName;
                 newList.desc = newAddress;
+              
                 if(obj[i]!= 'undefined') {
                     newList.hour = newHours;
                     newList.site = newWebsite;
+                    newList.zone = newZone;
+                    newList.type = newType;
                 } else {
                     newList.hour = "Currently nothing available";
                     newList.site = "No Website or Facebook";
+                    newList.zone = '';
+                    newList.type = '';
                 }
                 DIR_LIST.push(newList);
             }
+            console.log(DIR_LIST);
         }
         catch (err) {
             console.log("error: " + err);
@@ -88,10 +100,16 @@ export default class TestDir extends Component {
 }
 
 //-------------- DROP DOWN MENU CLASS ----------------------//
+
+
 class ListCollapseView extends React.Component {
-  state = {
-    activeSection: false,
-    collapsed: true,
+    constructor(props) {
+        super(props);
+        this.state = {
+          activeSection: false,
+          collapsed: true,
+          cuisineType: 'All',
+        }
   };
 
   _toggleExpanded = () => {
@@ -127,14 +145,49 @@ class ListCollapseView extends React.Component {
       Linking.openURL(url);
     }
 
+  filterDirectory(val){
+    if (val === "All"){
+      return DIR_LIST
+    }
+    var array = [];
+    for(var i = 0; i < DIR_LIST.length; i++){
+      if (DIR_LIST[i].type === val){
+        array.push(DIR_LIST[i])
+      }
+    }
+    //array = DIR_LIST;
+    return array;
+  }
+
    
   render() {
+    //var type = DIR_LIST[this.state.cusineType];
+    console.log("Selected state: " + this.state.cuisineType);
+    var filteredList = this.filterDirectory(this.state.cuisineType);
+    console.log(filteredList);
+        // console.log( "content type:" + type.title);
+        // console.log( "url link:" + type.url);
+        
     return (
       <View style={styles.dContainer}>
         <ScrollView>
+          <Text>Filter by Cuisine type:</Text>
+            <Picker
+                selectedValue={this.state.cuisineType}
+                onValueChange={(cuisineValue) => this.setState({cuisineType: cuisineValue})}>
+                    <Picker.Item label = "All" value = "All" />
+                    <Picker.Item label = "Asian" value = "Asian" />
+                    <Picker.Item label = "Chinese" value = "Chinese" />
+                    <Picker.Item label = "European" value = "European" />
+                    <Picker.Item label = "Fusion" value = "Fusion" />
+                    <Picker.Item label = "Local Delights" value = "Local Delights" />
+                    <Picker.Item label = "Thai" value = "Thai" />
+                    <Picker.Item label = "Western" value = "Western" />
+                </Picker>
+                <View style = {styles.separator}/>
         <Accordion
           activeSection={this.state.activeSection}
-          sections={DIR_LIST}
+          sections={filteredList}
           renderHeader={this._renderHeader}
           renderContent={this._renderContent.bind(this)}
           duration={400}
@@ -146,6 +199,8 @@ class ListCollapseView extends React.Component {
     );
   }
 }
+
+
 
 var styles = StyleSheet.create({
    container: {
@@ -201,4 +256,8 @@ var styles = StyleSheet.create({
     fontWeight: '500',
     padding: 10,
   },
+  separator: {
+        height: 1,
+        backgroundColor: '#dddddd',
+    },
 });

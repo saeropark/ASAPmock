@@ -9,6 +9,7 @@ import {
   Platform,
   AlertIOS,
   TouchableHighlight,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import { StackNavigator, DrawerNavigator} from 'react-navigation';
@@ -43,13 +44,15 @@ class MyHomeScreen extends React.Component {
     headerStyle: {
     },
     headerLeft: (
-        <View style={{padding:10}}>
+        <View style={{padding:20, }}>
+            <TouchableOpacity onPress={() => navigation.navigate('DrawerOpen')}>
             <Icon
-                onPress={() => navigation.navigate('DrawerOpen')}
+                //onPress={() => navigation.navigate('DrawerOpen')}
                 name='menu'
                 //type='ionicon'
                 color='black'
             />
+            </TouchableOpacity>
         </View>
     )
   });
@@ -133,25 +136,16 @@ class HandlerOne extends Component{
     return (
 
         <View style={styles.textContainer}>
+             <Icon
+            name='keyboard-arrow-up'
+            color= '#fff'//color='#517fa4'
+            />
           <Text style={styles.handlerText}>Slide to pull up</Text>    
      </View>
     );
   }
 };
 
-/*class HandlerTwo extends Component {
-  render() {
-    return (
-      <TouchableHighlight style={styles.button} underlayColor='transparent' onPress={this.onPress}>
-        <Text style={styles.handlerText}>Tap me!</Text>
-      </TouchableHighlight>
-    );
-  }
-
-  onPress() {
-    AlertIOS.alert('Event Happened', 'You just tapped the button!', [{text: 'OK'}]);
-  }
-};*/
 
 //======== CLASS TO CALL CONTACT US PAGE ============
 class Contact extends React.Component {
@@ -420,8 +414,9 @@ iconCon: {
   },
 
   handlerText: {
-    color: 'black',
+    color: 'white',
     fontSize: 15,
+    justifyContent: 'center',
     fontWeight: '700',
   },
 

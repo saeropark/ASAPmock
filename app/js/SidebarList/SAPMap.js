@@ -50,6 +50,7 @@ export default class SAPMap extends Component {
                     <Picker.Item label = "BUS STOP" value = "busStop" />
                     <Picker.Item label = "Overview" value = "overview" />
                 </Picker>
+                
                  <PhotoView
                     source={{uri: type.url}}
                     minimumZoomScale={1}

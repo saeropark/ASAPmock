@@ -578,15 +578,17 @@ class RouteDetail extends React.Component {
                     title = 'More Information'
                     backgroundColor = '#ffffff' 
                     onPress={this.goImptNotes.bind(this)}/>
-
+            
+            
                     <Button
+                    buttonStyle = {styles.btnStyle}
                     color = "#FFFFFF"
                     title ="Back to List"
                     backgroundColor="#FFA500"
                     onPress={() => goBack()} />
-                    
+                    </View>
                   
-                </View>
+                
             </ScrollView>
             </View>
         );
@@ -792,12 +794,16 @@ const RouteTab = TabNavigator({
 },
     
     {
+        lazy:true,
         mode: 'modal', // this is needed to make sure header is hidden on ios
+        navigationOptions: {
+            lazyLoad: true,
+        },
         tabBarOptions: {
-        activeTintColor: 'white',
-        inactiveTintColor: 'lightgray',
-        labelStyle: {
-            fontSize:16,
+            activeTintColor: 'white',
+            inactiveTintColor: 'lightgray',
+            labelStyle: {
+                fontSize:16,
         },
 
           style: {
@@ -815,13 +821,16 @@ const RouteStack = StackNavigator({
 
 RouteTab.navigationOptions = ({navigation})=> ({
   header: null,
- 
+ lazy: true,
 });
 
 
 export default RouteStack;
 
 var styles = StyleSheet.create ({
+    btnStyle: {
+        position:'relative',
+    },
     container: {
         flex: 1,
         flexDirection: 'row',
